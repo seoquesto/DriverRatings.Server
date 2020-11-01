@@ -11,9 +11,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DriverRatings.Infrastructur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DriverRatings.Core", "src\DriverRatings.Core\DriverRatings.Core.csproj", "{35FF5112-A29B-4B74-8E2F-2C175681C64E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DriverRatings.Tests.EndToEnd", "src\DriverRatings.Tests.EndToEnd\DriverRatings.Tests.EndToEnd.csproj", "{15CC228C-0267-4870-96E8-ED928C219658}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DriverRatings.Tests.EndToEnd", "tests\DriverRatings.Tests.EndToEnd\DriverRatings.Tests.EndToEnd.csproj", "{15CC228C-0267-4870-96E8-ED928C219658}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DriverRatings.Tests", "src\DriverRatings.Tests\DriverRatings.Tests.csproj", "{38C6585F-E683-409C-87AC-41B8E032525F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DriverRatings.Tests", "tests\DriverRatings.Tests\DriverRatings.Tests.csproj", "{38C6585F-E683-409C-87AC-41B8E032525F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

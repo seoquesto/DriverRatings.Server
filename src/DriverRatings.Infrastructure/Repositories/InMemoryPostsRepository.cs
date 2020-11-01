@@ -22,15 +22,15 @@ namespace src.DriverRatings.Infrastructure.Repositories
       return PostsList.Where(x => x.UserInfo.UserId.Equals(userId));
     }
 
-    public async Task<Post> GetByPostId(Guid id)
+    public async Task<Post> GetByPostId(Guid postId)
     {
       await Task.CompletedTask;
-      return PostsList.FirstOrDefault(x => x.Id.Equals(id));
+      return PostsList.FirstOrDefault(x => x.PostId.Equals(postId));
     }
 
     public async Task RemoveAsync(Post post)
     {
-      var postToRemove = await this.GetByPostId(post.Id);
+      var postToRemove = await this.GetByPostId(post.PostId);
       PostsList.Remove(postToRemove);
     }
 
@@ -43,7 +43,7 @@ namespace src.DriverRatings.Infrastructure.Repositories
 
   public interface IPostsRepository
   {
-    Task<Post> GetByPostId(Guid id);
+    Task<Post> GetByPostId(Guid postID);
     Task<IEnumerable<Post>> GetAllByUserId(Guid userId);
     Task AddAsync(Post post);
     Task RemoveAsync(Post post);

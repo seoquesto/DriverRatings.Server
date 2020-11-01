@@ -4,7 +4,7 @@ namespace src.DriverRatings.Core.Models
 {
   public class User
   {
-    public Guid Id { get; protected set; }
+    public Guid UserId { get; protected set; }
     public string Username { get; protected set; }
     public string Email { get; protected set; }
     public string Password { get; protected set; }
@@ -20,9 +20,9 @@ namespace src.DriverRatings.Core.Models
     {
     }
 
-    public User(Guid id, string username, string email, string password, string salt, string role = "user")
+    public User(Guid userId, string username, string email, string password, string salt, string role = "user")
     {
-      this.SetId(id);
+      this.SetUserId(userId);
       this.SetUsername(username);
       this.SetEmail(email);
       this.SetPassword(password);
@@ -30,19 +30,19 @@ namespace src.DriverRatings.Core.Models
       this.SetRole(role);
     }
 
-    private void SetId(Guid id)
+    private void SetUserId(Guid userId)
     {
-      if (id == null)
+      if (userId == null)
       {
-        throw new DomainException(UserErrorCodes.InvalidUserId, "User id cannot be empty!.");
+        throw new DomainException(UserErrorCodes.EmptyUserId, "User id cannot be empty!.");
       }
 
-      if (this.Id == id)
+      if (this.UserId == userId)
       {
         return;
       }
 
-      this.Id = id;
+      this.UserId = userId;
     }
 
     // TODO: Validate username
@@ -50,7 +50,7 @@ namespace src.DriverRatings.Core.Models
     {
       if (string.IsNullOrEmpty(username))
       {
-        throw new DomainException(UserErrorCodes.InvalidUsername, "User name cannot be empty!.");
+        throw new DomainException(UserErrorCodes.EmptyUsername, "User name cannot be empty!.");
       }
 
       if (this.Username == username)
@@ -66,7 +66,7 @@ namespace src.DriverRatings.Core.Models
     {
       if (string.IsNullOrEmpty(email))
       {
-        throw new DomainException(UserErrorCodes.InvalidEmail, "User email cannot be empty!.");
+        throw new DomainException(UserErrorCodes.EmptyEmail, "User email cannot be empty!.");
       }
 
       if (this.Email == email)
@@ -82,7 +82,7 @@ namespace src.DriverRatings.Core.Models
     {
       if (string.IsNullOrEmpty(password))
       {
-        throw new DomainException(UserErrorCodes.InvalidPassword, "User password cannot be empty!.");
+        throw new DomainException(UserErrorCodes.EmptyPassword, "User password cannot be empty!.");
       }
 
       if (this.Password == password)
@@ -98,7 +98,7 @@ namespace src.DriverRatings.Core.Models
     {
       if (string.IsNullOrEmpty(salt))
       {
-        throw new DomainException(UserErrorCodes.InvalidSalt, "User salt cannot be empty!.");
+        throw new DomainException(UserErrorCodes.EmptySalt, "User salt cannot be empty!.");
       }
 
       if (this.Salt == salt)
@@ -114,7 +114,7 @@ namespace src.DriverRatings.Core.Models
     {
       if (string.IsNullOrEmpty(role))
       {
-        throw new DomainException(UserErrorCodes.InvalidRole, "User role cannot be empty!.");
+        throw new DomainException(UserErrorCodes.EmptyRole, "User role cannot be empty!.");
       }
 
       if (this.Role == role)

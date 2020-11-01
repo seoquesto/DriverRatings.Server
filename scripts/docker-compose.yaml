@@ -1,12 +1,12 @@
 version: '2'
 
 services:
-  # api:
-  #   build: ../src/DriverRatings.Api
-  #   ports:
-  #     - 5000:5000
-  #   depends_on:
-  #     - database
+  api:
+    build: ../src/DriverRatings.Api
+    ports:
+      - 5000:5000
+    depends_on:
+      - database
   database:
     image: mongo
     restart: always

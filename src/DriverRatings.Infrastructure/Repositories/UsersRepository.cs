@@ -22,8 +22,8 @@ namespace src.DriverRatings.Infrastructure.Repositories
     public async Task<User> GetByEmailAsync(string email)
       => await this._users.AsQueryable().FirstOrDefaultAsync(x => x.Email.Equals(email));
 
-    public async Task<User> GetByIdAsync(Guid id)
-      => await this._users.AsQueryable().FirstOrDefaultAsync(x => x.Id.Equals(id));
+    public async Task<User> GetByIdAsync(Guid userId)
+      => await this._users.AsQueryable().FirstOrDefaultAsync(x => x.UserId.Equals(userId));
 
     public async Task<User> GetByUsernameAsync(string username)
       => await this._users.AsQueryable().FirstOrDefaultAsync(x => x.Username.Equals(username));
@@ -32,9 +32,9 @@ namespace src.DriverRatings.Infrastructure.Repositories
       => await this._users.InsertOneAsync(user);
 
     public async Task RemoveAsync(User user)
-      => await this._users.DeleteOneAsync(x => x.Id.Equals(user.Id));
+      => await this._users.DeleteOneAsync(x => x.UserId.Equals(user.UserId));
 
     public async Task Update(User user)
-      => await this._users.ReplaceOneAsync(x => x.Id.Equals(user.Id), user);
+      => await this._users.ReplaceOneAsync(x => x.UserId.Equals(user.UserId), user);
   }
 }

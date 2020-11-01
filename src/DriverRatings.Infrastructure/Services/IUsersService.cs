@@ -8,7 +8,7 @@ namespace src.DriverRatings.Infrastructure.Services
   {
     Task RegisterAsync(Guid userId, string username, string email, string password);
     Task LoginAsync(string username, string password);
-    Task<UserDto> GetByIdAsync(Guid id);
+    Task<UserDto> GetByIdAsync(Guid userId);
     Task<UserDto> GetByEmailAsync(string email);
     Task<UserDto> GetByUsernameAsync(string username);
   }

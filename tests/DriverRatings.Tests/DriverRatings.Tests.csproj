@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\DriverRatings.Core\DriverRatings.Core.csproj" />
     <ProjectReference Include="..\..\src\DriverRatings.Infrastructure\DriverRatings.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\DriverRatings.Api\DriverRatings.Api.csproj" />
   </ItemGroup>
   
   <ItemGroup>

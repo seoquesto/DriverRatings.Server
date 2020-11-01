@@ -7,7 +7,7 @@ namespace src.DriverRatings.Core.Models
   {
     private ISet<Comment> _comments = new HashSet<Comment>();
 
-    public Guid Id { get; protected set; }
+    public Guid PostId { get; protected set; }
     public UserInfo UserInfo { get; protected set; }
     public string Content { get; protected set; }
     public DateTime CreatedAt { get; protected set; }
@@ -25,34 +25,34 @@ namespace src.DriverRatings.Core.Models
     {
     }
 
-    public Post(Guid id, UserInfo userInfo, string content)
+    public Post(Guid postId, UserInfo userInfo, string content)
     {
-      this.SetId(id);
+      this.SetPostId(postId);
       this.SetUserInfo(userInfo);
       this.SetContent(content);
       CreatedAt = DateTime.UtcNow;
     }
 
-    private void SetId(Guid id)
+    private void SetPostId(Guid postId)
     {
-      if (id == null)
+      if (postId == null)
       {
-        throw new DomainException(PostErrorCodes.InvalidPostId, "Post id cannot be empty!.");
+        throw new DomainException(PostErrorCodes.EmptyPostId, "Post id cannot be empty!.");
       }
 
-      if (this.Id == id)
+      if (this.PostId == postId)
       {
         return;
       }
 
-      this.Id = id;
+      this.PostId = postId;
     }
 
     private void SetUserInfo(UserInfo userInfo)
     {
       if (userInfo == null)
       {
-        throw new DomainException(PostErrorCodes.InvalidPostUserInfo, "Post user info cannot be empty!.");
+        throw new DomainException(PostErrorCodes.EmptyUserInfo, "Post user info cannot be empty!.");
       }
 
       if (this.UserInfo == userInfo)
@@ -67,7 +67,7 @@ namespace src.DriverRatings.Core.Models
     {
       if (string.IsNullOrEmpty(content))
       {
-        throw new DomainException(PostErrorCodes.InvalidPostContent, "Post content id cannot be empty!.");
+        throw new DomainException(PostErrorCodes.EmptyContent, "Post content cannot be empty!.");
       }
 
       if (this.Content == content)

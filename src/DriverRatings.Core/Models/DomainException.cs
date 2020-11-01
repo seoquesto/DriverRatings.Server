@@ -23,7 +23,6 @@ namespace src.DriverRatings.Core.Models
     public DomainException(Exception innerException, string code, string message, params object[] args)
     : base(code, string.Format(message, args), innerException)
     {
-
     }
   }
 }

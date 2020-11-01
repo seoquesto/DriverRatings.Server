@@ -22,10 +22,10 @@ namespace src.DriverRatings.Infrastructure.Repositories
       return UsersList;
     }
 
-    public async Task<User> GetByIdAsync(Guid id)
+    public async Task<User> GetByIdAsync(Guid userId)
     {
       await Task.CompletedTask;
-      return UsersList.FirstOrDefault(x => x.Id.Equals(id));
+      return UsersList.FirstOrDefault(x => x.UserId.Equals(userId));
     }
 
     public async Task<User> GetByEmailAsync(string email)
@@ -42,7 +42,7 @@ namespace src.DriverRatings.Infrastructure.Repositories
 
     public async Task RemoveAsync(User user)
     {
-      var userToRemove = await this.GetByIdAsync(user.Id);
+      var userToRemove = await this.GetByIdAsync(user.UserId);
       UsersList.Remove(userToRemove);
     }
 
@@ -51,16 +51,5 @@ namespace src.DriverRatings.Infrastructure.Repositories
       await Task.CompletedTask;
       throw new NotImplementedException();
     }
-  }
-
-  public interface IUsersRepository 
-  {
-    Task<User> GetByIdAsync(Guid id);
-    Task<User> GetByEmailAsync(string email);
-    Task<User> GetByUsernameAsync(string username);
-    Task AddAsync(User user);
-    Task RemoveAsync(User user);
-    Task Update(User user);
-    Task<IEnumerable<User>> GetAll();
   }
 }

@@ -31,7 +31,7 @@ namespace src.DriverRatings.Tests.EndToEnd
       };
 
       var client = _factory.CreateClient();
-      var response = await client.PostAsync("/users", GetPayload(createUserCommand));
+      var response = await client.PostAsync("/account/register", GetPayload(createUserCommand));
       Assert.Equal(HttpStatusCode.Created, response.StatusCode);
 
       var user = await GetUserAsync(createUserCommand.Email);

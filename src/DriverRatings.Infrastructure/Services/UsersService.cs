@@ -31,7 +31,7 @@ namespace src.DriverRatings.Infrastructure.Services
       user = await this._usersRepository.GetByUsernameAsync(username);
       if (user != null)
       {
-        throw new ServiceException(UsersServiceErrorCodes.EmailInUse, $@"User with email ""{email}"" already exist!.");
+        throw new ServiceException(UsersServiceErrorCodes.EmailInUse, $@"User with name ""{username}"" already exist!.");
       }
 
       var salt = this._encrypter.GetSalt(password);
@@ -48,9 +48,9 @@ namespace src.DriverRatings.Infrastructure.Services
       return this._mapper.Map<UserDto>(user);
     }
 
-    public async Task<UserDto> GetByIdAsync(Guid id)
+    public async Task<UserDto> GetByIdAsync(Guid userId)
     {
-      var user = await this._usersRepository.GetByIdAsync(id);
+      var user = await this._usersRepository.GetByIdAsync(userId);
 
       return this._mapper.Map<UserDto>(user);
     }

@@ -16,14 +16,17 @@ using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
 using src.DriverRatings.Infrastructure.Mongo;
+using System;
 
 namespace DriverRatings.Api
 {
   public class Startup
   {
-    public Startup(IConfiguration configuration)
+    public Startup(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
     {
       Configuration = configuration;
+      Console.WriteLine("Application name: " + webHostEnvironment.ApplicationName);
+      Console.WriteLine("Environment name: " + webHostEnvironment.EnvironmentName);
     }
 
     public IConfiguration Configuration { get; }

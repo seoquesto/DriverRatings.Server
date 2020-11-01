@@ -27,7 +27,7 @@ namespace src.DriverRatings.Core.Models
     {
       if (userId == null)
       {
-        throw new DomainException(UserErrorCodes.InvalidUserId, "User id cannot be empty!.");
+        throw new DomainException(UserErrorCodes.EmptyUserId, "User id cannot be empty!.");
       }
 
       if (this.UserId == userId)
@@ -43,7 +43,7 @@ namespace src.DriverRatings.Core.Models
     {
       if (string.IsNullOrEmpty(username))
       {
-        throw new DomainException(UserErrorCodes.InvalidUsername, "User name cannot be empty!.");
+        throw new DomainException(UserErrorCodes.EmptyUsername, "User name cannot be empty!.");
       }
 
       if (this.Username == username)
@@ -59,7 +59,7 @@ namespace src.DriverRatings.Core.Models
     {
       if (string.IsNullOrEmpty(email))
       {
-        throw new DomainException(UserErrorCodes.InvalidEmail, "User email cannot be empty!.");
+        throw new DomainException(UserErrorCodes.EmptyEmail, "User email cannot be empty!.");
       }
 
       if (this.Email == email)

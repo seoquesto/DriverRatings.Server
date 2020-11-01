@@ -23,31 +23,21 @@ namespace src.DriverRatings.Infrastructure.Services
 
     public async Task AddPostAsync(Guid userId, string content)
     {
-      if (string.IsNullOrEmpty(content))
-      {
-        throw new Exception("Post content cannot be empty!.");
-      }
-
       var user = await this._usersService.GetByIdAsync(userId);
       if (user == null)
       {
-        throw new Exception($@"User with id: ""{userId}"" does not exist!.");
+        throw new ServiceException(UsersServiceErrorCodes.UserDoesNotExist, $@"User with id: ""{userId}"" does not exist!.");
       }
 
       var post = new Post(new UserInfo(userId, user.Username, user.Email), content);
       await this._postsRepository.AddAsync(post);
     }
 
-    public async Task<PostDto> GetByPostId(Guid id)
+    public async Task<PostDto> GetByPostId(Guid postId)
     {
-      var post = await this._postsRepository.GetByPostId(id);
+      var post = await this._postsRepository.GetByPostId(postId);
 
-      if (post == null)
-      {
-        throw new Exception($@"Post with id: ""{id}"" does not exist!.");
-      }
-
-      return this.mapper.Map<Post, PostDto>(post);
+      return this.mapper.Map<PostDto>(post);
     }
   }
 }
