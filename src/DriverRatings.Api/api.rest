@@ -1,0 +1,53 @@
+@url = http://localhost:5000
+@username = adam.bartski
+@email = adam.bartski@gmail.com
+@password = password
+
+###
+### REGISTER ACCOUNT
+###
+# @name register
+POST {{url}}/account/register
+content-type: application/json
+
+{
+  "username": "{{username}}",
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+###
+### LOGIN
+###
+# @name login
+POST {{url}}/account/login
+content-type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+###
+### CHECK AUTH
+### 
+# @name auth
+GET {{url}}/account/auth
+Authorization: Bearer {{login.response.body.token}}
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+###
+### GET REGISTERED USER
+### 
+# @name registered-user
+GET {{url}}/users/{{register.response.headers.Location}}
+Authorization: Bearer {{login.response.body.token}}
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
