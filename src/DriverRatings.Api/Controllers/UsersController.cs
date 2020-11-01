@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using src.DriverRatings.Api.Controllers;
 using src.DriverRatings.Infrastructure.Commands;
-using src.DriverRatings.Infrastructure.Commands.Users;
 using src.DriverRatings.Infrastructure.Services;
 
 namespace DriverRatings.Api.Controllers

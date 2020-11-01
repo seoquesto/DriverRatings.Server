@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using src.DriverRatings.Core.Exceptions;
 
 namespace src.DriverRatings.Core.Models
 {

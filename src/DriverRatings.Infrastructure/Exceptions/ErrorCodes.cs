@@ -1,4 +1,4 @@
-namespace src.DriverRatings.Infrastructure.Services
+namespace src.DriverRatings.Infrastructure.Exceptions
 {
   public static class UsersServiceErrorCodes
   {

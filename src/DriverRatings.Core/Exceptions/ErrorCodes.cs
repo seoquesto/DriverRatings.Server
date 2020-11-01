@@ -1,4 +1,4 @@
-namespace src.DriverRatings.Core.Models
+namespace src.DriverRatings.Core.Exceptions
 {
   public static class UserErrorCodes
   {
