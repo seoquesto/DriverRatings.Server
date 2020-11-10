@@ -17,10 +17,16 @@ namespace src.DriverRatings.Core.Exceptions
     public const string EmptyContent = "empty_post_content";
   }
 
-    public static class CommentErrorCodes
+  public static class CommentErrorCodes
   {
     public const string InvalidCommentId = "invalid_comment_id";
     public const string UserInfoRequired = "comment_user_info_required";
     public const string InvalidCommentContent = "invalid_comment_content";
+  }
+
+  public static class RefreshTokenErrorCodes
+  {
+    public const string EmptyRefreshTokenUserId = "empty_refresh_token_user_id";
+    public const string EmptyRefreshToken = "empty_refresh_token";
   }
 }

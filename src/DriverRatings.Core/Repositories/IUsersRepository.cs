@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using src.DriverRatings.Core.Models;
 
-namespace src.DriverRatings.Infrastructure.Repositories
+namespace src.DriverRatings.Core.Repositories
 {
   public interface IUsersRepository 
   {

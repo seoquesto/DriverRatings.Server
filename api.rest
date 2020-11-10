@@ -31,23 +31,30 @@ content-type: application/json
 ###
 ### CHECK AUTH
 ### 
-# @name auth
-GET {{url}}/account/auth
+# @name check-auth
+GET {{url}}/account/check-auth
 Authorization: Bearer {{login.response.body.token}}
 
+###
+### REFRESH TOKEN
+### 
+# @name refresh-token
+POST {{url}}/account/tokens/refresh
+Authorization: Bearer {{login.response.body.token}}
+content-type: application/json
+
 {
-  "email": "{{email}}",
-  "password": "{{password}}"
+  "token": "{{login.response.body.refreshToken}}"
 }
 
 ###
-### GET REGISTERED USER
+### REVOKE REFRESH TOKEN
 ### 
-# @name registered-user
-GET {{url}}/users/{{register.response.headers.Location}}
+# @name refresh-token
+POST {{url}}/account/tokens/revoke
 Authorization: Bearer {{login.response.body.token}}
+content-type: application/json
 
 {
-  "email": "{{email}}",
-  "password": "{{password}}"
+  "token": "{{login.response.body.refreshToken}}"
 }

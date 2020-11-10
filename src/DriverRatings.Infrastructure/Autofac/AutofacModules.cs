@@ -1,6 +1,8 @@
 using Autofac;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using src.DriverRatings.Infrastructure.Autofac.Modules;
+using src.DriverRatings.Infrastructure.DTO;
 using Module = Autofac.Module;
 
 namespace src.DriverRatings.Infrastructure.Autofac

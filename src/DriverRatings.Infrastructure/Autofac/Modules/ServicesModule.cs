@@ -1,5 +1,7 @@
 using System.Reflection;
 using Autofac;
+using Microsoft.AspNetCore.Identity;
+using src.DriverRatings.Infrastructure.DTO;
 using src.DriverRatings.Infrastructure.Services;
 using Module = Autofac.Module;
 
@@ -27,6 +29,10 @@ namespace src.DriverRatings.Infrastructure.Autofac.Modules
 
       builder.RegisterType<DataInitializer>()
               .As<IDataInitializer>()
+              .SingleInstance();
+
+      builder.RegisterType<PasswordHasher<UserDto>>()
+              .As<IPasswordHasher<UserDto>>()
               .SingleInstance();
     }
   }

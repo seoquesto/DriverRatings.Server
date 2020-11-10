@@ -1,4 +1,4 @@
-namespace src.DriverRatings.Infrastructure.Repositories
+namespace src.DriverRatings.Core.Repositories
 {
     public interface IMongoRepository
     {

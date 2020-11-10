@@ -6,19 +6,19 @@ namespace src.DriverRatings.Infrastructure.Extensions
 {
   public static class CacheExtensions
   {
-    public static void SetJwt(this IMemoryCache memoryCache, Guid tokenId, JwtDto jwtDto)
+    public static void SetJwt(this IMemoryCache memoryCache, Guid cacheId, JwtDto jwtDto)
     {
-      memoryCache.Set<JwtDto>(GetJwtKey(tokenId), jwtDto, TimeSpan.FromSeconds(5));
+      memoryCache.Set<JwtDto>(GetJwtKey(cacheId), jwtDto, TimeSpan.FromSeconds(5));
     }
 
-    public static JwtDto GetJwt(this IMemoryCache memoryCache, Guid tokenId)
+    public static JwtDto GetJwt(this IMemoryCache memoryCache, Guid cacheId)
     {
-      return memoryCache.Get<JwtDto>(GetJwtKey(tokenId));
+      return memoryCache.Get<JwtDto>(GetJwtKey(cacheId));
     }
 
-    public static string GetJwtKey(Guid tokenId)
+    public static string GetJwtKey(Guid cacheId)
     {
-      return $"jwt-{tokenId}";
+      return $"jwt-{cacheId}";
     }
   }
 }

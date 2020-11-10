@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using src.DriverRatings.Core.Models;
+using src.DriverRatings.Core.Repositories;
 
 namespace src.DriverRatings.Infrastructure.Repositories
 {

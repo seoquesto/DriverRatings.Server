@@ -1,7 +1,7 @@
 using System.Reflection;
 using Autofac;
 using MongoDB.Driver;
-using src.DriverRatings.Infrastructure.Repositories;
+using src.DriverRatings.Core.Repositories;
 using src.DriverRatings.Infrastructure.Settings;
 using Module = Autofac.Module;
 

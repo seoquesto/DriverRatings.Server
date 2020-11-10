@@ -19,7 +19,7 @@ namespace DriverRatings.Api.Controllers
     }
 
     [HttpGet("{email}")]
-    public async Task<IActionResult> Get(string email)
+    public async Task<IActionResult> GetAsync(string email)
     {
       var user = await this._usersService.GetByEmailAsync(email);
       if (user == null)

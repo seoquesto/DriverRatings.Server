@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using src.DriverRatings.Core.Models;
+using src.DriverRatings.Core.Repositories;
 
 namespace src.DriverRatings.Infrastructure.Repositories
 {
@@ -39,14 +40,5 @@ namespace src.DriverRatings.Infrastructure.Repositories
       await Task.CompletedTask;
       throw new NotImplementedException();
     }
-  }
-
-  public interface IPostsRepository
-  {
-    Task<Post> GetByPostId(Guid postID);
-    Task<IEnumerable<Post>> GetAllByUserId(Guid userId);
-    Task AddAsync(Post post);
-    Task RemoveAsync(Post post);
-    Task Update(Post post);
   }
 }

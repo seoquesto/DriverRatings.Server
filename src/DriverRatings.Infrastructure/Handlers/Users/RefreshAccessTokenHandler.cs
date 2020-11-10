@@ -7,14 +7,14 @@ using src.DriverRatings.Infrastructure.Services;
 
 namespace src.DriverRatings.Infrastructure.Handlers.Users
 {
-  public class LoginHandler : ICommandHandler<Login>
+  public class RefreshAccessTokenHandler : ICommandHandler<RefreshAccessToken>
   {
     private readonly IUsersService _usersService;
     private readonly IJwtHandler _jtwHandler;
     private readonly IMemoryCache _memoryCache;
     private readonly ITokenManager _tokenManager;
 
-    public LoginHandler(IUsersService userService, IJwtHandler jwtHandler, IMemoryCache memoryCache, ITokenManager tokenManager)
+    public RefreshAccessTokenHandler(IUsersService userService, IJwtHandler jwtHandler, IMemoryCache memoryCache, ITokenManager tokenManager)
     {
       this._usersService = userService;
       this._jtwHandler = jwtHandler;
@@ -22,14 +22,11 @@ namespace src.DriverRatings.Infrastructure.Handlers.Users
       this._tokenManager = tokenManager;
     }
 
-    public async Task HandleAsync(Login command)
+    public async Task HandleAsync(RefreshAccessToken command)
     {
-      await this._usersService.LoginAsync(command.Email, command.Password);
-      var user = await this._usersService.GetByEmailAsync(command.Email);
-      var jwt = this._jtwHandler.CreateToken(user.UserId, "user");
-      var token = await this._tokenManager.GenerateRefreshToken(user);
-      jwt.RefreshToken = token;
+      var jwt = await this._tokenManager.RefreshAccessToken(command.Token);
       this._memoryCache.SetJwt(command.CacheId, jwt);
     }
+
   }
 }

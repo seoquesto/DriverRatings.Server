@@ -5,6 +5,7 @@ using src.DriverRatings.Core.Models;
 using src.DriverRatings.Infrastructure.DTO;
 using src.DriverRatings.Infrastructure.Exceptions;
 using src.DriverRatings.Infrastructure.Repositories;
+using src.DriverRatings.Core.Repositories;
 
 namespace src.DriverRatings.Infrastructure.Services
 {
