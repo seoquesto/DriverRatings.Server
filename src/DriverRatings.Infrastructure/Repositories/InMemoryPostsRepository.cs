@@ -17,13 +17,13 @@ namespace src.DriverRatings.Infrastructure.Repositories
       PostsList.Add(post);
     }
 
-    public async Task<IEnumerable<Post>> GetAllByUserId(Guid userId)
+    public async Task<IEnumerable<Post>> GetAllByUserIdAsync(Guid userId)
     {
       await Task.CompletedTask;
       return PostsList.Where(x => x.UserInfo.UserId.Equals(userId));
     }
 
-    public async Task<Post> GetByPostId(Guid postId)
+    public async Task<Post> GetByPostIdAsync(Guid postId)
     {
       await Task.CompletedTask;
       return PostsList.FirstOrDefault(x => x.PostId.Equals(postId));
@@ -31,11 +31,11 @@ namespace src.DriverRatings.Infrastructure.Repositories
 
     public async Task RemoveAsync(Post post)
     {
-      var postToRemove = await this.GetByPostId(post.PostId);
+      var postToRemove = await this.GetByPostIdAsync(post.PostId);
       PostsList.Remove(postToRemove);
     }
 
-    public async Task Update(Post post)
+    public async Task UpdateAsync(Post post)
     {
       await Task.CompletedTask;
       throw new NotImplementedException();

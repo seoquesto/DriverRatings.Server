@@ -17,7 +17,7 @@ namespace src.DriverRatings.Infrastructure.Repositories
       UsersList.Add(user);
     }
 
-    public async Task<IEnumerable<User>> GetAll()
+    public async Task<IEnumerable<User>> GetAllAsync()
     {
       await Task.CompletedTask;
       return UsersList;
@@ -47,7 +47,7 @@ namespace src.DriverRatings.Infrastructure.Repositories
       UsersList.Remove(userToRemove);
     }
 
-    public async Task Update(User user)
+    public async Task UpdateAsync(User user)
     {
       await Task.CompletedTask;
       throw new NotImplementedException();

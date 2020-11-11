@@ -31,7 +31,7 @@ namespace src.DriverRatings.Core.Models
     {
       if (commentId == null)
       {
-        throw new DomainException(CommentErrorCodes.InvalidCommentId, "Comment id cannot be empty!.");
+        throw new DomainException(CommentErrorCodes.EmptyCommentId, "Comment id cannot be empty!.");
       }
 
       if (this.CommentId == commentId)
@@ -46,7 +46,7 @@ namespace src.DriverRatings.Core.Models
     {
       if (userInfo == null)
       {
-        throw new DomainException(CommentErrorCodes.UserInfoRequired, "User info in comment is required!.");
+        throw new DomainException(CommentErrorCodes.EmptyCommentUserInfo, "User info in comment is required!.");
       }
 
       if (this.UserInfo == userInfo)
@@ -61,7 +61,7 @@ namespace src.DriverRatings.Core.Models
     {
       if (string.IsNullOrEmpty(content))
       {
-        throw new DomainException(CommentErrorCodes.InvalidCommentContent, "Comment content id cannot be empty!.");
+        throw new DomainException(CommentErrorCodes.EmptyCommentContent, "Comment content id cannot be empty!.");
       }
 
       if (this.Content == content)

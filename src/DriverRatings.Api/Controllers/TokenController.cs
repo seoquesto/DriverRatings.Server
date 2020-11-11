@@ -5,34 +5,27 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using NLog;
 using src.DriverRatings.Infrastructure.Commands;
-using src.DriverRatings.Infrastructure.Commands.Users;
+using src.DriverRatings.Infrastructure.Commands.Token;
 using src.DriverRatings.Infrastructure.Extensions;
 
 namespace src.DriverRatings.Api.Controllers
 {
   [ApiController]
   [Route("[controller]")]
-  public class AccountController : ApiControllerBase
+  public class TokenController : ApiControllerBase
   {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     private readonly IMemoryCache _memoryCache;
 
-    public AccountController(IMemoryCache memoryCache, ICommandDispatcher commandDispatcher)
+    public TokenController(IMemoryCache memoryCache, ICommandDispatcher commandDispatcher)
       : base(commandDispatcher)
     {
       this._memoryCache = memoryCache;
     }
 
-    [HttpPost("register")]
-    public async Task<IActionResult> RegisterAsync([FromBody] CreateUser command)
-    {
-      Logger.Info("Register");
-      await this.DispatchAsync(command);
-      return Created(command.Email, new object());
-    }
-
-    [HttpPost("login")]
-    public async Task<IActionResult> LoginAsync([FromBody] Login command)
+    [Authorize]
+    [HttpPost("refresh")]
+    public async Task<IActionResult> RefreshAccessTokenAsync([FromBody] RefreshAccessToken command)
     {
       command.CacheId = Guid.NewGuid();
       await this.DispatchAsync(command);
@@ -42,10 +35,11 @@ namespace src.DriverRatings.Api.Controllers
     }
 
     [Authorize]
-    [HttpGet("check-auth")]
-    public IActionResult GetAuth()
+    [HttpPost("revoke")]
+    public async Task<IActionResult> RevokeAccessTokenAsync([FromBody] RevokeRefreshToken command)
     {
-      return Content($"You are authorized!. Hello {this.User.Identity.Name}!");
+      await this.DispatchAsync(command);
+      return Ok();
     }
   }
 }

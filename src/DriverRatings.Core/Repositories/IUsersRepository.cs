@@ -12,7 +12,7 @@ namespace src.DriverRatings.Core.Repositories
     Task<User> GetByUsernameAsync(string username);
     Task AddAsync(User user);
     Task RemoveAsync(User user);
-    Task Update(User user);
-    Task<IEnumerable<User>> GetAll();
+    Task UpdateAsync(User user);
+    Task<IEnumerable<User>> GetAllAsync();
   }
 }

@@ -7,10 +7,10 @@ namespace src.DriverRatings.Core.Repositories
 {
   public interface IPostsRepository
   {
-    Task<Post> GetByPostId(Guid postID);
-    Task<IEnumerable<Post>> GetAllByUserId(Guid userId);
+    Task<Post> GetByPostIdAsync(Guid postId);
+    Task<IEnumerable<Post>> GetAllByUserIdAsync(Guid userId);
     Task AddAsync(Post post);
     Task RemoveAsync(Post post);
-    Task Update(Post post);
+    Task UpdateAsync(Post post);
   }
 }

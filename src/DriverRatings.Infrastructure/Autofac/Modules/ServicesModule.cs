@@ -3,6 +3,7 @@ using Autofac;
 using Microsoft.AspNetCore.Identity;
 using src.DriverRatings.Infrastructure.DTO;
 using src.DriverRatings.Infrastructure.Services;
+using src.DriverRatings.Infrastructure.Services.Interfaces;
 using Module = Autofac.Module;
 
 namespace src.DriverRatings.Infrastructure.Autofac.Modules

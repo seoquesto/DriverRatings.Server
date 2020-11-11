@@ -14,4 +14,10 @@ namespace src.DriverRatings.Infrastructure.Exceptions
     public const string UsernameInUser = "username_in_use";
     public const string InvalidCredentials = "invalid_credentials";
   }
+
+    public static class TokenManagerErrorCodes
+  {
+    public const string RefreshTokenNotFound = "refresh_token_not_found";
+    public const string RefreshTokenRevoked = "refresh_token_revoked";
+  }
 }

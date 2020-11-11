@@ -14,11 +14,9 @@ using src.DriverRatings.Infrastructure.Services;
 using src.DriverRatings.Api.Middleware;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
-using Microsoft.Extensions.Hosting;
 using src.DriverRatings.Infrastructure.Mongo;
 using System;
-using Microsoft.AspNetCore.Identity;
-using src.DriverRatings.Infrastructure.DTO;
+using src.DriverRatings.Infrastructure.Services.Interfaces;
 
 namespace DriverRatings.Api
 {

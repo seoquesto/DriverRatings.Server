@@ -17,7 +17,7 @@ namespace src.DriverRatings.Infrastructure.Repositories
       this._users = mongoDatabase.GetCollection<User>("users");
     }
 
-    public async Task<IEnumerable<User>> GetAll()
+    public async Task<IEnumerable<User>> GetAllAsync()
       => await this._users.AsQueryable().ToListAsync();
 
     public async Task<User> GetByEmailAsync(string email)
@@ -35,7 +35,7 @@ namespace src.DriverRatings.Infrastructure.Repositories
     public async Task RemoveAsync(User user)
       => await this._users.DeleteOneAsync(x => x.UserId.Equals(user.UserId));
 
-    public async Task Update(User user)
+    public async Task UpdateAsync(User user)
       => await this._users.ReplaceOneAsync(x => x.UserId.Equals(user.UserId), user);
   }
 }

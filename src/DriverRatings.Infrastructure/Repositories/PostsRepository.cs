@@ -13,12 +13,12 @@ namespace src.DriverRatings.Infrastructure.Repositories
       throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Post>> GetAllByUserId(Guid userId)
+    public Task<IEnumerable<Post>> GetAllByUserIdAsync(Guid userId)
     {
       throw new NotImplementedException();
     }
 
-    public Task<Post> GetByPostId(Guid postID)
+    public Task<Post> GetByPostIdAsync(Guid postID)
     {
       throw new NotImplementedException();
     }
@@ -28,7 +28,7 @@ namespace src.DriverRatings.Infrastructure.Repositories
       throw new NotImplementedException();
     }
 
-    public Task Update(Post post)
+    public Task UpdateAsync(Post post)
     {
       throw new NotImplementedException();
     }

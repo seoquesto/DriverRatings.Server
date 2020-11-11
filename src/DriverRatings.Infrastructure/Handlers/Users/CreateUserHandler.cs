@@ -1,9 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using src.DriverRatings.Core.Repositories;
 using src.DriverRatings.Infrastructure.Commands;
 using src.DriverRatings.Infrastructure.Commands.Users;
-using src.DriverRatings.Infrastructure.Services;
+using src.DriverRatings.Infrastructure.Services.Interfaces;
 
 namespace src.DriverRatings.Infrastructure.Handlers.Users
 {

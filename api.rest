@@ -39,22 +39,22 @@ Authorization: Bearer {{login.response.body.token}}
 ### REFRESH TOKEN
 ### 
 # @name refresh-token
-POST {{url}}/account/tokens/refresh
+POST {{url}}/token/refresh
 Authorization: Bearer {{login.response.body.token}}
 content-type: application/json
 
 {
-  "token": "{{login.response.body.refreshToken}}"
+  "refreshToken": "{{login.response.body.refreshToken}}"
 }
 
 ###
 ### REVOKE REFRESH TOKEN
 ### 
 # @name refresh-token
-POST {{url}}/account/tokens/revoke
+POST {{url}}/token/revoke
 Authorization: Bearer {{login.response.body.token}}
 content-type: application/json
 
 {
-  "token": "{{login.response.body.refreshToken}}"
+  "refreshToken": "{{login.response.body.refreshToken}}"
 }

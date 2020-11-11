@@ -3,7 +3,7 @@ using Microsoft.Extensions.Caching.Memory;
 using src.DriverRatings.Infrastructure.Commands;
 using src.DriverRatings.Infrastructure.Commands.Users;
 using src.DriverRatings.Infrastructure.Extensions;
-using src.DriverRatings.Infrastructure.Services;
+using src.DriverRatings.Infrastructure.Services.Interfaces;
 
 namespace src.DriverRatings.Infrastructure.Handlers.Users
 {

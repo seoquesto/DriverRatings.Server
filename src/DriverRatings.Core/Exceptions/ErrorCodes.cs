@@ -19,9 +19,9 @@ namespace src.DriverRatings.Core.Exceptions
 
   public static class CommentErrorCodes
   {
-    public const string InvalidCommentId = "invalid_comment_id";
-    public const string UserInfoRequired = "comment_user_info_required";
-    public const string InvalidCommentContent = "invalid_comment_content";
+    public const string EmptyCommentId = "empty_comment_id";
+    public const string EmptyCommentUserInfo = "empty_comment_user_info";
+    public const string EmptyCommentContent = "empty_comment_content";
   }
 
   public static class RefreshTokenErrorCodes

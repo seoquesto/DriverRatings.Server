@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Identity;
 using src.DriverRatings.Core.Models;
 using src.DriverRatings.Core.Repositories;
 using src.DriverRatings.Infrastructure.DTO;
+using src.DriverRatings.Infrastructure.Exceptions;
+using src.DriverRatings.Infrastructure.Services.Interfaces;
 
 namespace src.DriverRatings.Infrastructure.Services
 {
@@ -20,36 +22,36 @@ namespace src.DriverRatings.Infrastructure.Services
       this._passwordHasher = passwordHasher;
     }
 
-    public async Task<JwtDto> RefreshAccessToken(string token)
+    public async Task<JwtDto> RefreshAccessToken(string refreshToken)
     {
-      var refreshToken = await this._refreshTokensRepository.GetAsync(token);
+      var refToken = await this._refreshTokensRepository.GetAsync(refreshToken);
       if (refreshToken == null)
       {
-        throw new Exception("Refresh token was not found.");
+        throw new ServiceException(TokenManagerErrorCodes.RefreshTokenNotFound, "Refresh token was not found.");
       }
-      if (refreshToken.Revoked)
+      if (refToken.Revoked)
       {
-        throw new Exception("Refresh token was revoked");
+        throw new ServiceException(TokenManagerErrorCodes.RefreshTokenRevoked, "Refresh token was revoked");
       }
-      var jwt = this._jwtHandler.CreateToken(refreshToken.UserId, "user");
-      jwt.RefreshToken = refreshToken.Token;
+      var jwt = this._jwtHandler.CreateToken(refToken.UserId, "user");
+      jwt.RefreshToken = refToken.Token;
 
       return jwt;
     }
 
-    public async Task RevokeRefreshToken(string token)
+    public async Task RevokeRefreshToken(string refreshToken)
     {
-      var refreshToken = await this._refreshTokensRepository.GetAsync(token);
+      var refToken = await this._refreshTokensRepository.GetAsync(refreshToken);
       if (refreshToken == null)
       {
-        throw new Exception("Refresh token was not found.");
+        throw new ServiceException(TokenManagerErrorCodes.RefreshTokenNotFound, "Refresh token was not found.");
       }
-      if (refreshToken.Revoked)
+      if (refToken.Revoked)
       {
-        throw new Exception("Refresh token was already revoked.");
+        throw new ServiceException(TokenManagerErrorCodes.RefreshTokenRevoked, "Refresh token was revoked");
       }
-      refreshToken.Revoke();
-      await this._refreshTokensRepository.UpdateAsync(refreshToken);
+      refToken.Revoke();
+      await this._refreshTokensRepository.UpdateAsync(refToken);
     }
 
     public async Task<string> GenerateRefreshToken(UserDto userDto)
