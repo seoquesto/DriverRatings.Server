@@ -1,6 +1,6 @@
 using System;
 
-namespace src.DriverRatings.Core.Models
+namespace src.DriverRatings.Core.Exceptions
 {
   public class DomainException : BaseApplicationException
   {

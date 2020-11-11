@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using src.DriverRatings.Core.Models;
+using src.DriverRatings.Core.Repositories;
 
 namespace src.DriverRatings.Infrastructure.Repositories
 {
@@ -16,7 +17,7 @@ namespace src.DriverRatings.Infrastructure.Repositories
       UsersList.Add(user);
     }
 
-    public async Task<IEnumerable<User>> GetAll()
+    public async Task<IEnumerable<User>> GetAllAsync()
     {
       await Task.CompletedTask;
       return UsersList;
@@ -46,7 +47,7 @@ namespace src.DriverRatings.Infrastructure.Repositories
       UsersList.Remove(userToRemove);
     }
 
-    public async Task Update(User user)
+    public async Task UpdateAsync(User user)
     {
       await Task.CompletedTask;
       throw new NotImplementedException();

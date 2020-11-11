@@ -1,4 +1,4 @@
-namespace src.DriverRatings.Core.Models
+namespace src.DriverRatings.Core.Exceptions
 {
   public static class UserErrorCodes
   {
@@ -17,10 +17,16 @@ namespace src.DriverRatings.Core.Models
     public const string EmptyContent = "empty_post_content";
   }
 
-    public static class CommentErrorCodes
+  public static class CommentErrorCodes
   {
-    public const string InvalidCommentId = "invalid_comment_id";
-    public const string UserInfoRequired = "comment_user_info_required";
-    public const string InvalidCommentContent = "invalid_comment_content";
+    public const string EmptyCommentId = "empty_comment_id";
+    public const string EmptyCommentUserInfo = "empty_comment_user_info";
+    public const string EmptyCommentContent = "empty_comment_content";
+  }
+
+  public static class RefreshTokenErrorCodes
+  {
+    public const string EmptyRefreshTokenUserId = "empty_refresh_token_user_id";
+    public const string EmptyRefreshToken = "empty_refresh_token";
   }
 }

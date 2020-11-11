@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using src.DriverRatings.Infrastructure.DTO;
 using src.DriverRatings.Infrastructure.Extensions;
+using src.DriverRatings.Infrastructure.Services.Interfaces;
 using src.DriverRatings.Infrastructure.Settings;
 
 namespace src.DriverRatings.Infrastructure.Services

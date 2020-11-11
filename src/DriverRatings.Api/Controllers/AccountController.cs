@@ -16,8 +16,9 @@ namespace src.DriverRatings.Api.Controllers
   {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     private readonly IMemoryCache _memoryCache;
-    
-    public AccountController(IMemoryCache memoryCache, ICommandDispatcher commandDispatcher) : base(commandDispatcher)
+
+    public AccountController(IMemoryCache memoryCache, ICommandDispatcher commandDispatcher)
+      : base(commandDispatcher)
     {
       this._memoryCache = memoryCache;
     }
@@ -26,25 +27,25 @@ namespace src.DriverRatings.Api.Controllers
     public async Task<IActionResult> RegisterAsync([FromBody] CreateUser command)
     {
       Logger.Info("Register");
-      await this.DispatchAsync<CreateUser>(command);
+      await this.DispatchAsync(command);
       return Created(command.Email, new object());
     }
 
-     [HttpPost("login")]
+    [HttpPost("login")]
     public async Task<IActionResult> LoginAsync([FromBody] Login command)
     {
-      command.TokenId = Guid.NewGuid();
-      await this.DispatchAsync<Login>(command);
-      var jwt = this._memoryCache.GetJwt(command.TokenId);
+      command.CacheId = Guid.NewGuid();
+      await this.DispatchAsync(command);
+      var jwt = this._memoryCache.GetJwt(command.CacheId);
 
       return new JsonResult(jwt);
     }
 
     [Authorize]
-    [HttpGet("auth")]
+    [HttpGet("check-auth")]
     public IActionResult GetAuth()
     {
-      return Content("You are authorized!.");
+      return Content($"You are authorized!. Hello {this.User.Identity.Name}!");
     }
   }
 }

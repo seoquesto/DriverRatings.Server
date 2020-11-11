@@ -2,8 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using src.DriverRatings.Api.Controllers;
 using src.DriverRatings.Infrastructure.Commands;
-using src.DriverRatings.Infrastructure.Commands.Users;
-using src.DriverRatings.Infrastructure.Services;
+using src.DriverRatings.Infrastructure.Services.Interfaces;
 
 namespace DriverRatings.Api.Controllers
 {
@@ -20,7 +19,7 @@ namespace DriverRatings.Api.Controllers
     }
 
     [HttpGet("{email}")]
-    public async Task<IActionResult> Get(string email)
+    public async Task<IActionResult> GetAsync(string email)
     {
       var user = await this._usersService.GetByEmailAsync(email);
       if (user == null)

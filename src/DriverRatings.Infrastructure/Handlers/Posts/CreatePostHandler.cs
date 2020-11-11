@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using src.DriverRatings.Infrastructure.Commands;
 using src.DriverRatings.Infrastructure.Commands.Posts;
-using src.DriverRatings.Infrastructure.Services;
+using src.DriverRatings.Infrastructure.Services.Interfaces;
 
 namespace src.DriverRatings.Infrastructure.Handlers.Posts
 {

@@ -1,10 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using src.DriverRatings.Core.Models;
+using src.DriverRatings.Core.Repositories;
 using src.DriverRatings.Infrastructure.DTO;
-using src.DriverRatings.Infrastructure.Repositories;
+using src.DriverRatings.Infrastructure.Exceptions;
+using src.DriverRatings.Infrastructure.Services.Interfaces;
 
 namespace src.DriverRatings.Infrastructure.Services
 {
@@ -35,7 +36,7 @@ namespace src.DriverRatings.Infrastructure.Services
 
     public async Task<PostDto> GetByPostId(Guid postId)
     {
-      var post = await this._postsRepository.GetByPostId(postId);
+      var post = await this._postsRepository.GetByPostIdAsync(postId);
 
       return this.mapper.Map<PostDto>(post);
     }

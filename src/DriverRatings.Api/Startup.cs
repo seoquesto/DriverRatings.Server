@@ -14,9 +14,9 @@ using src.DriverRatings.Infrastructure.Services;
 using src.DriverRatings.Api.Middleware;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
-using Microsoft.Extensions.Hosting;
 using src.DriverRatings.Infrastructure.Mongo;
 using System;
+using src.DriverRatings.Infrastructure.Services.Interfaces;
 
 namespace DriverRatings.Api
 {
@@ -66,7 +66,7 @@ namespace DriverRatings.Api
       // Register your own things directly with Autofac here. Don't
       // call builder.Populate(), that happens in AutofacServiceProviderFactory
       // for you.
-      builder.RegisterModule(new AppModule(this.Configuration));
+      builder.RegisterModule(new AutofacModules(this.Configuration));
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

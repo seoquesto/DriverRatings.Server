@@ -4,8 +4,9 @@ using Moq;
 using System.Threading.Tasks;
 using AutoMapper;
 using src.DriverRatings.Core.Models;
-using src.DriverRatings.Infrastructure.Repositories;
 using src.DriverRatings.Infrastructure.Services;
+using src.DriverRatings.Core.Repositories;
+using src.DriverRatings.Infrastructure.Services.Interfaces;
 
 namespace DriverRatings.Tests
 {

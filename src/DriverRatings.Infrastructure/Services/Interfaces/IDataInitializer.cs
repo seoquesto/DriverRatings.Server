@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace src.DriverRatings.Infrastructure.Services
+namespace src.DriverRatings.Infrastructure.Services.Interfaces
 {
     public interface IDataInitializer
     {

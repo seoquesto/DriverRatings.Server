@@ -1,4 +1,5 @@
 using System;
+using src.DriverRatings.Core.Exceptions;
 
 namespace src.DriverRatings.Core.Models
 {

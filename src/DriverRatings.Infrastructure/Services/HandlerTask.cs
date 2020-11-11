@@ -1,7 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using src.DriverRatings.Core.Models;
+using src.DriverRatings.Core.Exceptions;
 using src.DriverRatings.Infrastructure.Handlers;
+using src.DriverRatings.Infrastructure.Services.Interfaces;
 
 namespace src.DriverRatings.Infrastructure.Services
 {

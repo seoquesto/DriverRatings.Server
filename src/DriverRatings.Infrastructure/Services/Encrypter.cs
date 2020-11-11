@@ -1,6 +1,7 @@
 using System;
 using System.Security.Cryptography;
 using src.DriverRatings.Infrastructure.Extensions;
+using src.DriverRatings.Infrastructure.Services.Interfaces;
 
 namespace src.DriverRatings.Infrastructure.Services
 {

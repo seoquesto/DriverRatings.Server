@@ -1,7 +1,7 @@
 using System;
-using src.DriverRatings.Core.Models;
+using src.DriverRatings.Core.Exceptions;
 
-namespace src.DriverRatings.Infrastructure.Services
+namespace src.DriverRatings.Infrastructure.Exceptions
 {
   public class ServiceException : BaseApplicationException
   {

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using src.DriverRatings.Infrastructure.Commands;
 using src.DriverRatings.Infrastructure.Commands.Posts;
-using src.DriverRatings.Infrastructure.Services;
+using src.DriverRatings.Infrastructure.Services.Interfaces;
 
 namespace src.DriverRatings.Api.Controllers
 {

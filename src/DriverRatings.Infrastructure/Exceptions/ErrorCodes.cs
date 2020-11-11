@@ -1,4 +1,4 @@
-namespace src.DriverRatings.Infrastructure.Services
+namespace src.DriverRatings.Infrastructure.Exceptions
 {
   public static class UsersServiceErrorCodes
   {
@@ -13,5 +13,11 @@ namespace src.DriverRatings.Infrastructure.Services
     public const string LackOfContent = "lack_of_post_content";
     public const string UsernameInUser = "username_in_use";
     public const string InvalidCredentials = "invalid_credentials";
+  }
+
+    public static class TokenManagerErrorCodes
+  {
+    public const string RefreshTokenNotFound = "refresh_token_not_found";
+    public const string RefreshTokenRevoked = "refresh_token_revoked";
   }
 }
