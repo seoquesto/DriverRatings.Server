@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using src.DriverRatings.Infrastructure.Commands;
 using src.DriverRatings.Infrastructure.Commands.Posts;
+using src.DriverRatings.Infrastructure.Queries;
 using src.DriverRatings.Infrastructure.Services.Interfaces;
 
 namespace src.DriverRatings.Api.Controllers
@@ -15,10 +16,12 @@ namespace src.DriverRatings.Api.Controllers
   {
     private readonly IPostsService postsService;
 
-    public PostsController(ICommandDispatcher commandDispatcher, IPostsService postsService) : base(commandDispatcher)
-    {
-      this.postsService = postsService;
-    }
+    public PostsController(
+      ICommandDispatcher commandDispatcher,
+      IPostsService postsService,
+      IQueryDispatcher queryDispatcher)
+      : base(commandDispatcher, queryDispatcher)
+      => this.postsService = postsService;
 
     [HttpGet("{postId}")]
     public async Task<IActionResult> Get(Guid postId)
@@ -36,8 +39,7 @@ namespace src.DriverRatings.Api.Controllers
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] CreatePost command)
     {
-      await this.DispatchAsync(command);
-
+      await this.DispatchCommandAsync(command);
       return Created($"posts", new object());
     }
   }

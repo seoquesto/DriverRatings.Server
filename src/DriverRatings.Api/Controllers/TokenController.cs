@@ -7,6 +7,7 @@ using NLog;
 using src.DriverRatings.Infrastructure.Commands;
 using src.DriverRatings.Infrastructure.Commands.Token;
 using src.DriverRatings.Infrastructure.Extensions;
+using src.DriverRatings.Infrastructure.Queries;
 
 namespace src.DriverRatings.Api.Controllers
 {
@@ -17,18 +18,19 @@ namespace src.DriverRatings.Api.Controllers
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     private readonly IMemoryCache _memoryCache;
 
-    public TokenController(IMemoryCache memoryCache, ICommandDispatcher commandDispatcher)
-      : base(commandDispatcher)
-    {
-      this._memoryCache = memoryCache;
-    }
+    public TokenController(
+      IMemoryCache memoryCache,
+      ICommandDispatcher commandDispatcher,
+      IQueryDispatcher queryDispatcher)
+      : base(commandDispatcher, queryDispatcher)
+      => this._memoryCache = memoryCache;
 
     [Authorize]
     [HttpPost("refresh")]
     public async Task<IActionResult> RefreshAccessTokenAsync([FromBody] RefreshAccessToken command)
     {
       command.CacheId = Guid.NewGuid();
-      await this.DispatchAsync(command);
+      await this.DispatchCommandAsync(command);
       var jwt = this._memoryCache.GetJwt(command.CacheId);
 
       return new JsonResult(jwt);
@@ -38,7 +40,7 @@ namespace src.DriverRatings.Api.Controllers
     [HttpPost("revoke")]
     public async Task<IActionResult> RevokeAccessTokenAsync([FromBody] RevokeRefreshToken command)
     {
-      await this.DispatchAsync(command);
+      await this.DispatchCommandAsync(command);
       return Ok();
     }
   }

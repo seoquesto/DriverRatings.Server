@@ -36,6 +36,17 @@ GET {{url}}/account/check-auth
 Authorization: Bearer {{login.response.body.token}}
 
 ###
+### GET USER BY EMAIL
+###
+GET {{url}}/users
+Authorization: Bearer {{login.response.body.token}}
+content-type: application/json
+
+{
+  "email": "{{email}}"
+}
+
+###
 ### REFRESH TOKEN
 ### 
 # @name refresh-token
