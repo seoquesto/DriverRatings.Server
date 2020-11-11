@@ -30,7 +30,7 @@ namespace src.DriverRatings.Infrastructure.Services
         throw new ServiceException(UsersServiceErrorCodes.UserDoesNotExist, $@"User with id: ""{userId}"" does not exist!.");
       }
 
-      var post = new Post(new UserInfo(userId, user.Username, user.Email), content);
+      var post = new Post(new UserInfo(user.UserId, user.Username, user.Email), content);
       await this._postsRepository.AddAsync(post);
     }
 
