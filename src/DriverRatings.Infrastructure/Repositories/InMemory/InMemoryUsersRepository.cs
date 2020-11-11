@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using src.DriverRatings.Core.Models;
 using src.DriverRatings.Core.Repositories;
 
-namespace src.DriverRatings.Infrastructure.Repositories
+namespace src.DriverRatings.Infrastructure.Repositories.InMemory
 {
   public class InMemoryUsersRepository : IUsersRepository, IRepository
   {

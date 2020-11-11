@@ -20,7 +20,7 @@ namespace src.DriverRatings.Infrastructure.Repositories
 
     public async Task<RefreshToken> GetAsync(string token)
       => await this._refrestTokens.AsQueryable().FirstOrDefaultAsync(x => x.Token.Equals(token));
-      
+
     public async Task UpdateAsync(RefreshToken refreshToken)
       => await this._refrestTokens.ReplaceOneAsync(x => x.Token.Equals(refreshToken.Token), refreshToken);
   }

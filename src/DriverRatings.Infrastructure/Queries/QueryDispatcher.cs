@@ -14,7 +14,6 @@ namespace src.DriverRatings.Infrastructure.Queries
 
     public async Task<TResult> QueryAsync<TQuery, TResult>(TQuery query) where TQuery : class, IQuery<TResult>
     {
-
       return await this._componentContext.Resolve<IQueryHandler<TQuery, TResult>>().HandleAsync(query);
     }
   }

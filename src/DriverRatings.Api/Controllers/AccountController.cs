@@ -28,7 +28,7 @@ namespace src.DriverRatings.Api.Controllers
     [HttpPost("register")]
     public async Task<IActionResult> RegisterAsync([FromBody] CreateUser command)
     {
-      Logger.Info("Register");
+      Logger.Info($"Register user... Email: {command.Email} Username: {command.Username}.");
       await this.DispatchCommandAsync(command);
       return Created(command.Email, new object());
     }
