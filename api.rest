@@ -31,14 +31,14 @@ content-type: application/json
 ###
 ### CHECK AUTH
 ### 
-# @name check-auth
+# @name checkAuth
 GET {{url}}/account/check-auth
 Authorization: Bearer {{login.response.body.token}}
 
 ###
 ### REFRESH TOKEN
 ### 
-# @name refresh-token
+# @name refreshToken
 POST {{url}}/token/refresh
 Authorization: Bearer {{login.response.body.token}}
 content-type: application/json
@@ -50,7 +50,7 @@ content-type: application/json
 ###
 ### REVOKE REFRESH TOKEN
 ### 
-# @name refresh-token
+# @name revokeToken
 POST {{url}}/token/revoke
 Authorization: Bearer {{login.response.body.token}}
 content-type: application/json
@@ -58,3 +58,34 @@ content-type: application/json
 {
   "refreshToken": "{{login.response.body.refreshToken}}"
 }
+
+###
+### GET USER BY EMAIL
+###
+# @name getUserByEmail
+GET {{url}}/users
+Authorization: Bearer {{login.response.body.token}}
+content-type: application/json
+
+{
+  "email": "{{email}}"
+}
+
+###
+### CREATE POST
+###
+# @name createPost
+POST {{url}}/posts
+Authorization: Bearer {{login.response.body.token}}
+content-type: application/json
+
+{
+  "content": "Post dupa dupa"
+}
+
+###
+### CREATE POST
+###
+# @name getPostById
+GET {{url}}/{{createPost.response.headers.Location}}
+Authorization: Bearer {{login.response.body.token}}

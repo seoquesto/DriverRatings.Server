@@ -1,7 +1,7 @@
 namespace src.DriverRatings.Infrastructure.Services.Interfaces
 {
-    public interface IService
-    {
-        
-    }
+  public interface IService
+  {
+
+  }
 }

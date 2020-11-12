@@ -17,6 +17,10 @@ namespace src.DriverRatings.Infrastructure.Autofac.Modules
               .InstancePerLifetimeScope();
 
       builder.RegisterAssemblyTypes(assembly)
+              .AsClosedTypesOf(typeof(ICommandHandler<,>))
+              .InstancePerLifetimeScope();
+
+      builder.RegisterAssemblyTypes(assembly)
               .AsClosedTypesOf(typeof(ICommandHandler<>))
               .InstancePerLifetimeScope();
     }

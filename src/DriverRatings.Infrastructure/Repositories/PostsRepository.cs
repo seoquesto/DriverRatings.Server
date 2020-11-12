@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 using src.DriverRatings.Core.Models;
 using src.DriverRatings.Core.Repositories;
 
@@ -8,29 +10,26 @@ namespace src.DriverRatings.Infrastructure.Repositories
 {
   public class PostsRepository : IPostsRepository, IMongoRepository
   {
-    public Task AddAsync(Post post)
+    private readonly IMongoCollection<Post> _posts;
+
+    public PostsRepository(IMongoDatabase mongoDatabase)
     {
-      throw new NotImplementedException();
+      this._posts = mongoDatabase.GetCollection<Post>("posts");
     }
 
-    public Task<IEnumerable<Post>> GetAllByUserIdAsync(Guid userId)
-    {
-      throw new NotImplementedException();
-    }
+    public async Task AddAsync(Post post)
+      => await this._posts.InsertOneAsync(post);
 
-    public Task<Post> GetByPostIdAsync(Guid postID)
-    {
-      throw new NotImplementedException();
-    }
+    public async Task<IEnumerable<Post>> GetAllByUserIdAsync(Guid userId)
+      => await this._posts.Find(x => x.UserInfo.UserId.Equals(userId)).ToListAsync();
 
-    public Task RemoveAsync(Post post)
-    {
-      throw new NotImplementedException();
-    }
+    public async Task<Post> GetByPostIdAsync(Guid postId)
+      => await this._posts.Find(x => x.PostId.Equals(postId)).SingleOrDefaultAsync();
 
-    public Task UpdateAsync(Post post)
-    {
-      throw new NotImplementedException();
-    }
+    public async Task RemoveAsync(Post post)
+      => await this._posts.DeleteOneAsync(x => x.PostId.Equals(post.PostId));
+
+    public async Task UpdateAsync(Post post)
+      => await this._posts.ReplaceOneAsync(x => x.PostId.Equals(post.PostId), post);
   }
 }

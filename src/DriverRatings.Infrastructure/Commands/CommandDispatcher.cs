@@ -5,16 +5,15 @@ namespace src.DriverRatings.Infrastructure.Commands
 {
   public class CommandDispatcher : ICommandDispatcher
   {
-    private readonly IComponentContext componentContext;
+    private readonly IComponentContext _componentContext;
 
     public CommandDispatcher(IComponentContext componentContext)
-    {
-      this.componentContext = componentContext;
-    }
+      => _componentContext = componentContext;
 
-    public async Task DispatchAsync<T>(T command) where T : ICommand
-    {
-      await this.componentContext.Resolve<ICommandHandler<T>>().HandleAsync(command);
-    }
+    public async Task DispatchAsync<TCommand>(TCommand command) where TCommand : ICommand
+      => await this._componentContext.Resolve<ICommandHandler<TCommand>>().HandleAsync(command);
+
+    public async Task<TResult> DispatchAsync<TCommand, TResult>(TCommand command) where TCommand : ICommand
+      => await this._componentContext.Resolve<ICommandHandler<TCommand, TResult>>().HandleAsync(command);
   }
 }

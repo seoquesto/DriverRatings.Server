@@ -25,6 +25,7 @@ namespace src.DriverRatings.Infrastructure.Autofac
       builder.RegisterModule<ServicesModule>();
       builder.RegisterModule<AutomapperModule>();
       builder.RegisterModule<CommandsModule>();
+      builder.RegisterModule<QueriesModule>();
     }
   }
 }

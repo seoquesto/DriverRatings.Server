@@ -67,7 +67,7 @@ namespace src.DriverRatings.Infrastructure.Services
     public async Task LoginAsync(string email, string password)
     {
       var user = await this._usersRepository.GetByEmailAsync(email);
-      if (user == null)
+      if (user is null)
       {
         throw new ServiceException(UsersServiceErrorCodes.InvalidCredentials, "Invalid credentials!.");
       }
