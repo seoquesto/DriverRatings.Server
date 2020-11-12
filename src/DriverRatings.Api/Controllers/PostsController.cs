@@ -27,7 +27,7 @@ namespace src.DriverRatings.Api.Controllers
     public async Task<IActionResult> Get(Guid postId)
     {
       var post = await this.postsService.GetByPostId(postId);
-      if (post == null)
+      if (post is null)
       {
         return NotFound();
       }
@@ -39,8 +39,8 @@ namespace src.DriverRatings.Api.Controllers
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] CreatePost command)
     {
-      await this.DispatchCommandAsync(command);
-      return Created($"posts", new object());
+      var postId = await this.DispatchCommandAsync<CreatePost, Guid>(command);
+      return Created($"posts/{postId}", new object());
     }
   }
 }

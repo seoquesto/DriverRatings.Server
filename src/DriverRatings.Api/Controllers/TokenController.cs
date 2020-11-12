@@ -41,7 +41,7 @@ namespace src.DriverRatings.Api.Controllers
     public async Task<IActionResult> RevokeAccessTokenAsync([FromBody] RevokeRefreshToken command)
     {
       await this.DispatchCommandAsync(command);
-      return Ok();
+      return NoContent();
     }
   }
 }

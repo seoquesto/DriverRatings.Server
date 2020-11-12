@@ -6,6 +6,7 @@ using Microsoft.Extensions.Caching.Memory;
 using NLog;
 using src.DriverRatings.Infrastructure.Commands;
 using src.DriverRatings.Infrastructure.Commands.Users;
+using src.DriverRatings.Infrastructure.DTO;
 using src.DriverRatings.Infrastructure.Extensions;
 using src.DriverRatings.Infrastructure.Queries;
 
@@ -29,8 +30,8 @@ namespace src.DriverRatings.Api.Controllers
     public async Task<IActionResult> RegisterAsync([FromBody] CreateUser command)
     {
       Logger.Info($"Register user... Email: {command.Email} Username: {command.Username}.");
-      await this.DispatchCommandAsync(command);
-      return Created(command.Email, new object());
+      var userDto = await this.DispatchCommandAsync<CreateUser, UserDto>(command);
+      return Created(userDto.Email, new object());
     }
 
     [HttpPost("login")]

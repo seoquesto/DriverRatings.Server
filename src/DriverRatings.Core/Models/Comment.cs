@@ -44,7 +44,7 @@ namespace src.DriverRatings.Core.Models
 
     private void SetUserInfo(UserInfo userInfo)
     {
-      if (userInfo == null)
+      if (userInfo is null)
       {
         throw new DomainException(CommentErrorCodes.EmptyCommentUserInfo, "User info in comment is required!.");
       }

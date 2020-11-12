@@ -25,7 +25,7 @@ namespace src.DriverRatings.Infrastructure.Services
     public async Task<JwtDto> RefreshAccessToken(string refreshToken)
     {
       var refToken = await this._refreshTokensRepository.GetAsync(refreshToken);
-      if (refreshToken == null)
+      if (refreshToken is null)
       {
         throw new ServiceException(TokenManagerErrorCodes.RefreshTokenNotFound, "Refresh token was not found.");
       }
@@ -42,7 +42,7 @@ namespace src.DriverRatings.Infrastructure.Services
     public async Task RevokeRefreshToken(string refreshToken)
     {
       var refToken = await this._refreshTokensRepository.GetAsync(refreshToken);
-      if (refreshToken == null)
+      if (refreshToken is null)
       {
         throw new ServiceException(TokenManagerErrorCodes.RefreshTokenNotFound, "Refresh token was not found.");
       }

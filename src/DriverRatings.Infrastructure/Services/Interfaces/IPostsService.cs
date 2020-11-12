@@ -6,7 +6,7 @@ namespace src.DriverRatings.Infrastructure.Services.Interfaces
 {
   public interface IPostsService : IService
   {
-    Task AddPostAsync(Guid userId, string content);
+    Task<Guid> AddPostAsync(Guid userId, string content);
     Task<PostDto> GetByPostId(Guid postId);
   }
 }

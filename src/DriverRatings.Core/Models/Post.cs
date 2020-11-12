@@ -51,7 +51,7 @@ namespace src.DriverRatings.Core.Models
 
     private void SetUserInfo(UserInfo userInfo)
     {
-      if (userInfo == null)
+      if (userInfo is null)
       {
         throw new DomainException(PostErrorCodes.EmptyUserInfo, "Post user info cannot be empty!.");
       }
