@@ -7,7 +7,9 @@ namespace src.DriverRatings.Core.Models
   {
     public Guid UserId { get; protected set; }
     public string Token { get; protected set; }
-    public bool Revoked { get; protected set; }
+    public DateTime CreatedAt { get; protected set; }
+    public DateTime? RevokedAt { get; protected set; }
+    public bool Revoked => this.RevokedAt.HasValue;
 
     protected RefreshToken()
     {
@@ -17,14 +19,14 @@ namespace src.DriverRatings.Core.Models
     {
       this.SetUserId(userId);
       this.SetToken(token);
-      this.Revoked = revoked;
+      this.CreatedAt = DateTime.UtcNow;
     }
 
     private void SetUserId(Guid userId)
     {
       if (userId == null)
       {
-        throw new DomainException(RefreshTokenErrorCodes.EmptyRefreshTokenUserId, "User id cannot be empty!.");
+        throw new InvalidIdException("Invalid user id.");
       }
 
       if (this.UserId == userId)
@@ -39,7 +41,7 @@ namespace src.DriverRatings.Core.Models
     {
       if (string.IsNullOrEmpty(token))
       {
-        throw new DomainException(RefreshTokenErrorCodes.EmptyRefreshToken, "Refresh token cannot be empty!.");
+        throw new InvalidRefreshTokenException();
       }
       if (Token == token)
       {
@@ -50,11 +52,12 @@ namespace src.DriverRatings.Core.Models
 
     public void Revoke()
     {
-      if (this.Revoked == true)
+      if (this.Revoked)
       {
-        return;
+        throw new RevokedRefreshTokenException();
       }
-      this.Revoked = true;
+
+      this.RevokedAt = DateTime.UtcNow;
     }
   }
 }

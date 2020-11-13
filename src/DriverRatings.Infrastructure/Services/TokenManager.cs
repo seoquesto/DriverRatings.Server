@@ -1,10 +1,10 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using src.DriverRatings.Core.Exceptions;
 using src.DriverRatings.Core.Models;
 using src.DriverRatings.Core.Repositories;
 using src.DriverRatings.Infrastructure.DTO;
-using src.DriverRatings.Infrastructure.Exceptions;
 using src.DriverRatings.Infrastructure.Services.Interfaces;
 
 namespace src.DriverRatings.Infrastructure.Services
@@ -27,34 +27,37 @@ namespace src.DriverRatings.Infrastructure.Services
       var refToken = await this._refreshTokensRepository.GetAsync(refreshToken);
       if (refreshToken is null)
       {
-        throw new ServiceException(TokenManagerErrorCodes.RefreshTokenNotFound, "Refresh token was not found.");
+        throw new InvalidRefreshTokenException();
       }
       if (refToken.Revoked)
       {
-        throw new ServiceException(TokenManagerErrorCodes.RefreshTokenRevoked, "Refresh token was revoked");
+        throw new RevokedRefreshTokenException();
       }
+
       var jwt = this._jwtHandler.CreateToken(refToken.UserId, "user");
       jwt.RefreshToken = refToken.Token;
 
       return jwt;
     }
 
-    public async Task RevokeRefreshToken(string refreshToken)
+    public async Task RevokeRefreshTokenAsync(string refreshToken)
     {
-      var refToken = await this._refreshTokensRepository.GetAsync(refreshToken);
       if (refreshToken is null)
       {
-        throw new ServiceException(TokenManagerErrorCodes.RefreshTokenNotFound, "Refresh token was not found.");
+        throw new InvalidRefreshTokenException();
       }
-      if (refToken.Revoked)
+
+      var token = await this._refreshTokensRepository.GetAsync(refreshToken);
+      if (token.Revoked)
       {
-        throw new ServiceException(TokenManagerErrorCodes.RefreshTokenRevoked, "Refresh token was revoked");
+        throw new RevokedRefreshTokenException();
       }
-      refToken.Revoke();
-      await this._refreshTokensRepository.UpdateAsync(refToken);
+
+      token.Revoke();
+      await this._refreshTokensRepository.UpdateAsync(token);
     }
 
-    public async Task<string> GenerateRefreshToken(UserDto userDto)
+    public async Task<string> CreateRefreshTokenAsync(UserDto userDto)
     {
       var token = this._passwordHasher
                 .HashPassword(userDto, Guid.NewGuid().ToString())

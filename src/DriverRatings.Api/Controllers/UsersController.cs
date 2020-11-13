@@ -22,9 +22,10 @@ namespace DriverRatings.Api.Controllers
       : base(commandDispatcher, queryDispatcher)
       => (_usersService) = (usersService);
 
-    [HttpGet]
-    public async Task<IActionResult> GetAsync([FromBody] GetUserByEmail query)
+    [HttpGet("{email}")]
+    public async Task<IActionResult> GetAsync(string email)
     {
+      var query = new GetUserByEmail { Email = email };
       var user = await this.DispatchQueryAsync<GetUserByEmail, UserDto>(query);
       return Ok(user);
     }

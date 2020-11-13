@@ -12,6 +12,6 @@ namespace src.DriverRatings.Infrastructure.Commands.Handlers.Token
       => _tokenManager = tokenManager;
 
     public async Task HandleAsync(RevokeRefreshToken command) 
-      => await this._tokenManager.RevokeRefreshToken(command.RefreshToken);
+      => await this._tokenManager.RevokeRefreshTokenAsync(command.RefreshToken);
   }
 }

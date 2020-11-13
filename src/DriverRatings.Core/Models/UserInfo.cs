@@ -26,9 +26,9 @@ namespace src.DriverRatings.Core.Models
 
     private void SetUserId(Guid userId)
     {
-      if (userId == null)
+      if (userId == Guid.Empty)
       {
-        throw new DomainException(UserErrorCodes.EmptyUserId, "User id cannot be empty!.");
+         throw new InvalidIdException("Invalid user info id.");
       }
 
       if (this.UserId == userId)
@@ -39,12 +39,11 @@ namespace src.DriverRatings.Core.Models
       this.UserId = userId;
     }
 
-    // TODO: Validate username
     private void SetUsername(string username)
     {
       if (string.IsNullOrEmpty(username))
       {
-        throw new DomainException(UserErrorCodes.EmptyUsername, "User name cannot be empty!.");
+        throw new InvalidCredentialsException("User name cannot be empty.");
       }
 
       if (this.Username == username)
@@ -60,7 +59,7 @@ namespace src.DriverRatings.Core.Models
     {
       if (string.IsNullOrEmpty(email))
       {
-        throw new DomainException(UserErrorCodes.EmptyEmail, "User email cannot be empty!.");
+        throw new InvalidCredentialsException("Email cannot be empty.");
       }
 
       if (this.Email == email)

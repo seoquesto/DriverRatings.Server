@@ -63,13 +63,8 @@ content-type: application/json
 ### GET USER BY EMAIL
 ###
 # @name getUserByEmail
-GET {{url}}/users
+GET {{url}}/users/{{email}}
 Authorization: Bearer {{login.response.body.token}}
-content-type: application/json
-
-{
-  "email": "{{email}}"
-}
 
 ###
 ### CREATE POST
@@ -80,11 +75,11 @@ Authorization: Bearer {{login.response.body.token}}
 content-type: application/json
 
 {
-  "content": "Post dupa dupa"
+  "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
 }
 
 ###
-### CREATE POST
+### GET POST BY ID
 ###
 # @name getPostById
 GET {{url}}/{{createPost.response.headers.Location}}

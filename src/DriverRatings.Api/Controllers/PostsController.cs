@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using src.DriverRatings.Infrastructure.Commands;
 using src.DriverRatings.Infrastructure.Commands.Posts;
+using src.DriverRatings.Infrastructure.DTO;
 using src.DriverRatings.Infrastructure.Queries;
+using src.DriverRatings.Infrastructure.Queries.Posts;
 using src.DriverRatings.Infrastructure.Services.Interfaces;
 
 namespace src.DriverRatings.Api.Controllers
@@ -24,20 +26,16 @@ namespace src.DriverRatings.Api.Controllers
       => this.postsService = postsService;
 
     [HttpGet("{postId}")]
-    public async Task<IActionResult> Get(Guid postId)
+    public async Task<IActionResult> GetPostByIdAsync(Guid postId)
     {
-      var post = await this.postsService.GetByPostId(postId);
-      if (post is null)
-      {
-        return NotFound();
-      }
-
-      return Ok(post);
+      var query = new GetPostById { PostId = postId }; 
+      var postDto = await this.DispatchQueryAsync<GetPostById, PostDto>(query);
+      return Ok(postDto);
     }
 
     [Authorize]
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] CreatePost command)
+    public async Task<IActionResult> CreatePostAsync([FromBody] CreatePost command)
     {
       var postId = await this.DispatchCommandAsync<CreatePost, Guid>(command);
       return Created($"posts/{postId}", new object());

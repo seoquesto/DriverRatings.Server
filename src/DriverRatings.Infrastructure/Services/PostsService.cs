@@ -27,7 +27,7 @@ namespace src.DriverRatings.Infrastructure.Services
       var user = await this._usersService.GetByIdAsync(userId);
       if (user is null)
       {
-        throw new ServiceException(UsersServiceErrorCodes.UserDoesNotExist, $@"User with id: ""{userId}"" does not exist!.");
+        throw new UserNotFoundException($@"User with id: ""{userId}"" was not found.");
       }
 
       var post = new Post(new UserInfo(user.UserId, user.Username, user.Email), content);
@@ -36,7 +36,7 @@ namespace src.DriverRatings.Infrastructure.Services
       return post.PostId;
     }
 
-    public async Task<PostDto> GetByPostId(Guid postId)
+    public async Task<PostDto> GetByPostIdAsync(Guid postId)
     {
       var post = await this._postsRepository.GetByPostIdAsync(postId);
 

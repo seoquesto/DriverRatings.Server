@@ -29,9 +29,9 @@ namespace src.DriverRatings.Core.Models
 
     private void SetCommentId(Guid commentId)
     {
-      if (commentId == null)
+      if (commentId == Guid.Empty)
       {
-        throw new DomainException(CommentErrorCodes.EmptyCommentId, "Comment id cannot be empty!.");
+        throw new InvalidIdException("Invalid comment id.");
       }
 
       if (this.CommentId == commentId)
@@ -46,7 +46,7 @@ namespace src.DriverRatings.Core.Models
     {
       if (userInfo is null)
       {
-        throw new DomainException(CommentErrorCodes.EmptyCommentUserInfo, "User info in comment is required!.");
+        throw new InvalidAggregationException("User's information are required in a comment.");
       }
 
       if (this.UserInfo == userInfo)
@@ -61,7 +61,7 @@ namespace src.DriverRatings.Core.Models
     {
       if (string.IsNullOrEmpty(content))
       {
-        throw new DomainException(CommentErrorCodes.EmptyCommentContent, "Comment content id cannot be empty!.");
+        throw new InvalidCommentContentException("Comment cannot be empty.");
       }
 
       if (this.Content == content)
