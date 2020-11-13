@@ -26,7 +26,7 @@ namespace src.DriverRatings.Infrastructure.Commands.Handlers.Users
       await this._usersService.LoginAsync(command.Email, command.Password);
       var user = await this._usersService.GetByEmailAsync(command.Email);
       var jwt = this._jtwHandler.CreateToken(user.UserId, "user");
-      var token = await this._tokenManager.GenerateRefreshToken(user);
+      var token = await this._tokenManager.CreateRefreshTokenAsync(user);
       jwt.RefreshToken = token;
       this._memoryCache.SetJwt(command.CacheId, jwt);
     }

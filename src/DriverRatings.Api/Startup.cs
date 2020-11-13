@@ -10,7 +10,6 @@ using src.DriverRatings.Infrastructure.Settings;
 using System.Text;
 using src.DriverRatings.Infrastructure.Extensions;
 using Autofac.Extensions.DependencyInjection;
-using src.DriverRatings.Infrastructure.Services;
 using src.DriverRatings.Api.Middleware;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;

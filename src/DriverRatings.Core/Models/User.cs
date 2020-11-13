@@ -33,9 +33,9 @@ namespace src.DriverRatings.Core.Models
 
     private void SetUserId(Guid userId)
     {
-      if (userId == null)
+      if (userId == Guid.Empty)
       {
-        throw new DomainException(UserErrorCodes.EmptyUserId, "User id cannot be empty!.");
+        throw new InvalidIdException("Invalid user id.");
       }
 
       if (this.UserId == userId)
@@ -46,12 +46,11 @@ namespace src.DriverRatings.Core.Models
       this.UserId = userId;
     }
 
-    // TODO: Validate username
     private void SetUsername(string username)
     {
       if (string.IsNullOrEmpty(username))
       {
-        throw new DomainException(UserErrorCodes.EmptyUsername, "User name cannot be empty!.");
+        throw new InvalidCredentialsException("Username cannot be empty.");
       }
 
       if (this.Username == username)
@@ -62,12 +61,11 @@ namespace src.DriverRatings.Core.Models
       this.Username = username;
     }
 
-    // TODO: Validate email
     private void SetEmail(string email)
     {
       if (string.IsNullOrEmpty(email))
       {
-        throw new DomainException(UserErrorCodes.EmptyEmail, "User email cannot be empty!.");
+        throw new InvalidCredentialsException("Email cannot be empty.");
       }
 
       if (this.Email == email)
@@ -78,12 +76,11 @@ namespace src.DriverRatings.Core.Models
       this.Email = email;
     }
 
-    // TODO: Validate password
     private void SetPassword(string password)
     {
       if (string.IsNullOrEmpty(password))
       {
-        throw new DomainException(UserErrorCodes.EmptyPassword, "User password cannot be empty!.");
+        throw new InvalidCredentialsException();
       }
 
       if (this.Password == password)
@@ -94,12 +91,11 @@ namespace src.DriverRatings.Core.Models
       this.Password = password;
     }
 
-    // TODO: Validate salt
     private void SetSalt(string salt)
     {
       if (string.IsNullOrEmpty(salt))
       {
-        throw new DomainException(UserErrorCodes.EmptySalt, "User salt cannot be empty!.");
+        throw new InvalidCredentialsException();
       }
 
       if (this.Salt == salt)
@@ -115,7 +111,7 @@ namespace src.DriverRatings.Core.Models
     {
       if (string.IsNullOrEmpty(role))
       {
-        throw new DomainException(UserErrorCodes.EmptyRole, "User role cannot be empty!.");
+        throw new InvalidRoleException();
       }
 
       if (this.Role == role)

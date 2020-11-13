@@ -36,9 +36,9 @@ namespace src.DriverRatings.Core.Models
 
     private void SetPostId(Guid postId)
     {
-      if (postId == null)
+      if (postId == Guid.Empty)
       {
-        throw new DomainException(PostErrorCodes.EmptyPostId, "Post id cannot be empty!.");
+         throw new InvalidIdException("Invalid post id");
       }
 
       if (this.PostId == postId)
@@ -53,7 +53,7 @@ namespace src.DriverRatings.Core.Models
     {
       if (userInfo is null)
       {
-        throw new DomainException(PostErrorCodes.EmptyUserInfo, "Post user info cannot be empty!.");
+        throw new InvalidAggregationException("User's information are required in a post.");
       }
 
       if (this.UserInfo == userInfo)
@@ -68,7 +68,7 @@ namespace src.DriverRatings.Core.Models
     {
       if (string.IsNullOrEmpty(content))
       {
-        throw new DomainException(PostErrorCodes.EmptyContent, "Post content cannot be empty!.");
+        throw new InvalidCommentContentException("Post cannot be empty.");
       }
 
       if (this.Content == content)

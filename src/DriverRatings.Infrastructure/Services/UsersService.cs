@@ -6,6 +6,7 @@ using src.DriverRatings.Infrastructure.DTO;
 using src.DriverRatings.Infrastructure.Exceptions;
 using src.DriverRatings.Core.Repositories;
 using src.DriverRatings.Infrastructure.Services.Interfaces;
+using src.DriverRatings.Core.Exceptions;
 
 namespace src.DriverRatings.Infrastructure.Services
 {
@@ -27,13 +28,13 @@ namespace src.DriverRatings.Infrastructure.Services
       var user = await this._usersRepository.GetByEmailAsync(email);
       if (user != null)
       {
-        throw new ServiceException(UsersServiceErrorCodes.EmailInUse, $@"User with email ""{email}"" already exist!.");
+        throw new EmailInUseException(email);
       }
 
       user = await this._usersRepository.GetByUsernameAsync(username);
       if (user != null)
       {
-        throw new ServiceException(UsersServiceErrorCodes.EmailInUse, $@"User with name ""{username}"" already exist!.");
+        throw new UsernameInUseException(username);
       }
 
       var salt = this._encrypter.GetSalt(password);
@@ -69,13 +70,13 @@ namespace src.DriverRatings.Infrastructure.Services
       var user = await this._usersRepository.GetByEmailAsync(email);
       if (user is null)
       {
-        throw new ServiceException(UsersServiceErrorCodes.InvalidCredentials, "Invalid credentials!.");
+        throw new InvalidCredentialsException();
       }
 
       var hash = this._encrypter.GetHash(password, user.Salt);
       if (user.Password != hash)
       {
-        throw new ServiceException(UsersServiceErrorCodes.InvalidCredentials, "Invalid credentials!.");
+        throw new InvalidCredentialsException();
       }
     }
   }
