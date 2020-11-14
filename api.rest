@@ -19,10 +19,10 @@ content-type: application/json
 }
 
 ###
-### GET USER BY EMAIL
+### GET USER BY NAME
 ###
-# @name getUserByEmail
-GET {{url}}/users/{{email}}
+# @name getUserByName
+GET {{url}}/users/{{username}}
 Authorization: Bearer {{login.response.body.token}}
 
 ###
@@ -33,7 +33,7 @@ POST {{url}}/account/login
 content-type: application/json
 
 {
-  "email": "{{email}}",
+  "username": "{{username}}",
   "password": "{{password}}"
 }
 

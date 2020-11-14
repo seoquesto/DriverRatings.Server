@@ -28,70 +28,54 @@ namespace src.DriverRatings.Infrastructure.Services
 
     public async Task RegisterAsync(Guid userId, string username, string email, string password, string role)
     {
-      if (!StringExtensions.IsValidEmail(email))
+      var modifiedEmail = email?.Trim().ToLowerInvariant();
+      var modifiedUsername = username?.Trim().ToLowerInvariant();
+
+      if (!StringExtensions.IsValidEmail(modifiedEmail))
       {
-        _logger.Error($"Invalid email: {email}.");
-        throw new InvalidEmailException(email);
+        _logger.Error($"Invalid email: {modifiedEmail}.");
+        throw new InvalidEmailException(modifiedEmail);
       }
-      if (string.IsNullOrEmpty(username))
+      if (string.IsNullOrEmpty(modifiedUsername))
       {
-        _logger.Error($"Invalid username: {username}.");
-        throw new InvalidUsernameException(username);
+        _logger.Error($"Invalid username: {modifiedUsername}.");
+        throw new InvalidUsernameException(modifiedUsername);
       }
 
-      var user = await this._usersRepository.GetByEmailAsync(email);
+      var user = await this._usersRepository.GetByEmailAsync(modifiedEmail);
       if (user is { })
       {
-        _logger.Error($"Email in use: {email}.");
-        throw new EmailInUseException(email);
+        _logger.Error($"Email in use: {modifiedEmail}.");
+        throw new EmailInUseException(modifiedEmail);
       }
 
-      user = await this._usersRepository.GetByUsernameAsync(username);
+      user = await this._usersRepository.GetByUsernameAsync(modifiedUsername);
       if (user is { })
       {
-        _logger.Error($"Username in use: {username}.");
-        throw new UsernameInUseException(username);
+        _logger.Error($"Username in use: {modifiedUsername}.");
+        throw new UsernameInUseException(modifiedUsername);
       }
 
       var userRole = string.IsNullOrWhiteSpace(role) ? "user" : role.ToLowerInvariant();
       var salt = this._encrypter.GetSalt(password);
       var hash = this._encrypter.GetHash(password, salt);
-      user = new User(userId, username, email, hash, salt, userRole);
+      user = new User(userId, modifiedUsername, modifiedEmail, hash, salt, userRole);
 
-      _logger.Info($"Created an account for the user with id: {user.UserId.ToString()}.");
       await this._usersRepository.AddAsync(user);
+      _logger.Info($"Created an account for the user with id: {user.UserId.ToString()}.");
     }
 
-    public async Task<UserDto> GetByEmailAsync(string email)
+    public async Task LoginAsync(string username, string password)
     {
-      var user = await this._usersRepository.GetByEmailAsync(email);
+      var modifiedUsername = username?.Trim().ToLowerInvariant();
 
-      return this._mapper.Map<UserDto>(user);
-    }
-
-    public async Task<UserDto> GetByIdAsync(Guid userId)
-    {
-      var user = await this._usersRepository.GetByIdAsync(userId);
-
-      return this._mapper.Map<UserDto>(user);
-    }
-
-    public async Task<UserDto> GetByUsernameAsync(string username)
-    {
-      var user = await this._usersRepository.GetByUsernameAsync(username);
-
-      return this._mapper.Map<UserDto>(user);
-    }
-
-    public async Task LoginAsync(string email, string password)
-    {
-      if (!StringExtensions.IsValidEmail(email))
+      if (string.IsNullOrEmpty(modifiedUsername))
       {
-        _logger.Error($"Invalid email: {email}.");
-        throw new InvalidEmailException(email);
+        _logger.Error($"Invalid username: {modifiedUsername}.");
+        throw new InvalidUsernameException(modifiedUsername);
       }
 
-      var user = await this._usersRepository.GetByEmailAsync(email);
+      var user = await this._usersRepository.GetByUsernameAsync(modifiedUsername);
       if (user is null)
       {
         throw new InvalidCredentialsException();
@@ -103,6 +87,26 @@ namespace src.DriverRatings.Infrastructure.Services
         _logger.Error($"Invalid password for user id: {user.UserId.ToString()}.");
         throw new InvalidCredentialsException();
       }
+    }
+
+    public async Task<UserDto> GetByEmailAsync(string email)
+    {
+      var modifiedEmail = email?.Trim().ToLowerInvariant();
+      var user = await this._usersRepository.GetByEmailAsync(modifiedEmail);
+      return this._mapper.Map<UserDto>(user);
+    }
+
+    public async Task<UserDto> GetByIdAsync(Guid userId)
+    {
+      var user = await this._usersRepository.GetByIdAsync(userId);
+      return this._mapper.Map<UserDto>(user);
+    }
+
+    public async Task<UserDto> GetByUsernameAsync(string username)
+    {
+      var modifiedUsername = username?.Trim().ToLowerInvariant();
+      var user = await this._usersRepository.GetByUsernameAsync(modifiedUsername);
+      return this._mapper.Map<UserDto>(user);
     }
   }
 }

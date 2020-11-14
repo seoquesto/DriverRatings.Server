@@ -6,17 +6,17 @@ using src.DriverRatings.Infrastructure.Services.Interfaces;
 
 namespace src.DriverRatings.Infrastructure.Queries.Handlers.Users
 {
-  public class GetUserByEmailHandler : IQueryHandler<GetUserByEmail, UserDto>
+  public class GetUserByNameHandler : IQueryHandler<GetUserByName, UserDto>
   {
     private readonly IUsersService _usersService;
     private readonly IMapper _mapper;
 
-    public GetUserByEmailHandler(IUsersService usersService, IMapper mapper)
+    public GetUserByNameHandler(IUsersService usersService, IMapper mapper)
       => (_usersService, _mapper) = (usersService, mapper);
 
-    public async Task<UserDto> HandleAsync(GetUserByEmail query)
+    public async Task<UserDto> HandleAsync(GetUserByName query)
     {
-      var user = await this._usersService.GetByEmailAsync(query.Email);
+      var user = await this._usersService.GetByUsernameAsync(query.Username);
       return this._mapper.Map<UserDto>(user);
     }
   }

@@ -20,7 +20,7 @@ namespace DriverRatings.Tests
           IEncrypter encrypter = new Encrypter();
 
           var userService = new UsersService(userRepository.Object, mapper.Object, encrypter);
-          await userService.RegisterAsync(Guid.NewGuid(), "username", "email@email.com", "password");
+          await userService.RegisterAsync(Guid.NewGuid(), "username", "email@email.com", "password", "user");
           userRepository.Verify(x => x.AddAsync(It.IsAny<User>()), Times.Once);
         }
     }
