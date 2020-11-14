@@ -50,7 +50,7 @@ namespace src.DriverRatings.Core.Models
     {
       if (string.IsNullOrEmpty(username))
       {
-        throw new InvalidCredentialsException("Username cannot be empty.");
+        throw new InvalidUsernameException(username);
       }
 
       if (this.Username == username)
@@ -106,7 +106,6 @@ namespace src.DriverRatings.Core.Models
       this.Salt = salt;
     }
 
-    // TODO: Invalid role
     private void SetRole(string role)
     {
       if (string.IsNullOrEmpty(role))

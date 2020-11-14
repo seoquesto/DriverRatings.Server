@@ -16,7 +16,7 @@ namespace src.DriverRatings.Infrastructure.Commands.Handlers.Users
     public async Task<UserDto> HandleAsync(CreateUser command)
     {
       var userId = Guid.NewGuid();
-      await this._usersService.RegisterAsync(userId, command.Username, command.Email, command.Password);
+      await this._usersService.RegisterAsync(userId, command.Username, command.Email, command.Password, command.Role);
       return new UserDto { Email = command.Email, UserId = userId, Username = command.Username };
     }
   }
