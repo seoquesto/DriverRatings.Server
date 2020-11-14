@@ -25,13 +25,13 @@ namespace src.DriverRatings.Infrastructure.Services
       for (int i = 0; i < 3; i++)
       {
         var userId = Guid.NewGuid();
-        tasks.Add(this._usersService.RegisterAsync(userId, $"user{i}", $"user{i}@email.com", "password"));
+        tasks.Add(this._usersService.RegisterAsync(userId, $"user{i}", $"user{i}@email.com", "password", "user"));
       }
 
       for (int i = 0; i < 3; i++)
       {
         var adminId = Guid.NewGuid();
-        tasks.Add(this._usersService.RegisterAsync(adminId, $"admin{i}", $"admin{i}@email.com", "password"));
+        tasks.Add(this._usersService.RegisterAsync(adminId, $"admin{i}", $"admin{i}@email.com", "password", "admin"));
       }
 
       await Task.WhenAll(tasks);

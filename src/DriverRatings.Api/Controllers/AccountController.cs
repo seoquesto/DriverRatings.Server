@@ -29,14 +29,15 @@ namespace src.DriverRatings.Api.Controllers
     [HttpPost("register")]
     public async Task<IActionResult> RegisterAsync([FromBody] CreateUser command)
     {
-      Logger.Info($"Register user... Email: {command.Email} Username: {command.Username}.");
+      Logger.Info($"Call register user api. Email {command.Email}");
       var userDto = await this.DispatchCommandAsync<CreateUser, UserDto>(command);
-      return Created(userDto.Email, new object());
+      return Created($"users/{userDto.Email}", new object());
     }
 
     [HttpPost("login")]
     public async Task<IActionResult> LoginAsync([FromBody] Login command)
     {
+      Logger.Info($"Call login user api. Email {command.Email}");
       command.CacheId = Guid.NewGuid();
       await this.DispatchCommandAsync(command);
       var jwt = this._memoryCache.GetJwt(command.CacheId);

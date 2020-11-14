@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NLog;
 using src.DriverRatings.Infrastructure.Commands;
 using src.DriverRatings.Infrastructure.Commands.Posts;
 using src.DriverRatings.Infrastructure.DTO;
@@ -11,11 +12,11 @@ using src.DriverRatings.Infrastructure.Services.Interfaces;
 
 namespace src.DriverRatings.Api.Controllers
 {
-
   [ApiController]
   [Route("[controller]")]
   public class PostsController : ApiControllerBase
   {
+    private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
     private readonly IPostsService postsService;
 
     public PostsController(
@@ -37,6 +38,7 @@ namespace src.DriverRatings.Api.Controllers
     [HttpPost]
     public async Task<IActionResult> CreatePostAsync([FromBody] CreatePost command)
     {
+      _logger.Info($"Call create post api. User id: {UserId}.");
       var postId = await this.DispatchCommandAsync<CreatePost, Guid>(command);
       return Created($"posts/{postId}", new object());
     }

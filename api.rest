@@ -2,6 +2,7 @@
 @username = adam.bartski
 @email = adam.bartski@gmail.com
 @password = password
+@role = user
 
 ###
 ### REGISTER ACCOUNT
@@ -13,8 +14,16 @@ content-type: application/json
 {
   "username": "{{username}}",
   "email": "{{email}}",
-  "password": "{{password}}"
+  "password": "{{password}}",
+  "role": "{{role}}"
 }
+
+###
+### GET USER BY EMAIL
+###
+# @name getUserByEmail
+GET {{url}}/users/{{email}}
+Authorization: Bearer {{login.response.body.token}}
 
 ###
 ### LOGIN
@@ -58,13 +67,6 @@ content-type: application/json
 {
   "refreshToken": "{{login.response.body.refreshToken}}"
 }
-
-###
-### GET USER BY EMAIL
-###
-# @name getUserByEmail
-GET {{url}}/users/{{email}}
-Authorization: Bearer {{login.response.body.token}}
 
 ###
 ### CREATE POST
