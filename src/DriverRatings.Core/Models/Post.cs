@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using src.DriverRatings.Core.Exceptions;
 
 namespace src.DriverRatings.Core.Models
@@ -15,6 +16,7 @@ namespace src.DriverRatings.Core.Models
     public IEnumerable<Comment> Comments
     {
       get => this._comments;
+      private set => this._comments = new HashSet<Comment>(value);
     }
 
     protected Post()
@@ -38,7 +40,7 @@ namespace src.DriverRatings.Core.Models
     {
       if (postId == Guid.Empty)
       {
-         throw new InvalidIdException("Invalid post id");
+        throw new InvalidIdException("Invalid post id.");
       }
 
       if (this.PostId == postId)
@@ -77,6 +79,16 @@ namespace src.DriverRatings.Core.Models
       }
 
       this.Content = content;
+    }
+
+    public void AddComment(Comment comment)
+    {
+      if (Comments.Any(x => x.CommentId == comment.CommentId))
+      {
+        return;
+      }
+
+      _comments.Add(comment);
     }
   }
 }

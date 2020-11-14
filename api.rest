@@ -38,6 +38,52 @@ content-type: application/json
 }
 
 ###
+### CREATE POST
+###
+# @name createPost
+POST {{url}}/posts
+Authorization: Bearer {{login.response.body.token}}
+content-type: application/json
+
+{
+  "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+}
+
+###
+### GET POST BY ID
+###
+# @name getPostById
+GET {{url}}/{{createPost.response.headers.Location}}
+Authorization: Bearer {{login.response.body.token}}
+
+###
+### CREATE COMMENT
+###
+# @name createComment
+POST {{url}}/posts/comment
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: application/json
+
+{
+  "postId": "{{getPostById.response.body.postId}}",
+  "content": "Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus."
+}
+
+###
+### GET COMMENT BY ID
+###
+# @name getCommentById
+GET {{url}}/{{createComment.response.headers.Location}}
+Authorization: Bearer {{login.response.body.token}}
+
+###
+### DELETE POST
+###
+# @name deletePost
+DELETE  {{url}}/{{createPost.response.headers.Location}}
+Authorization: Bearer {{login.response.body.token}}
+
+###
 ### CHECK AUTH
 ### 
 # @name checkAuth
@@ -67,30 +113,3 @@ content-type: application/json
 {
   "refreshToken": "{{login.response.body.refreshToken}}"
 }
-
-###
-### CREATE POST
-###
-# @name createPost
-POST {{url}}/posts
-Authorization: Bearer {{login.response.body.token}}
-content-type: application/json
-
-{
-  "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-}
-
-###
-### GET POST BY ID
-###
-# @name getPostById
-GET {{url}}/{{createPost.response.headers.Location}}
-Authorization: Bearer {{login.response.body.token}}
-
-###
-### DELETE POST
-###
-# @name deletePost
-DELETE  {{url}}/{{createPost.response.headers.Location}}
-Authorization: Bearer {{login.response.body.token}}
-
