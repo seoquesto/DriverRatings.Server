@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Security.Authentication;
 using System.Threading.Tasks;
 using AutoMapper;
 using src.DriverRatings.Core.Exceptions;
@@ -7,6 +8,7 @@ using src.DriverRatings.Core.Models;
 using src.DriverRatings.Core.Repositories;
 using src.DriverRatings.Infrastructure.DTO;
 using src.DriverRatings.Infrastructure.Exceptions;
+using src.DriverRatings.Infrastructure.Extensions;
 using src.DriverRatings.Infrastructure.Services.Interfaces;
 
 namespace src.DriverRatings.Infrastructure.Services
@@ -38,12 +40,17 @@ namespace src.DriverRatings.Infrastructure.Services
       return post.PostId;
     }
 
-    public async Task DeletePostAsync(Guid postId)
+    public async Task DeletePostAsync(Guid userId, Guid postId)
     {
       var post = await this._postsRepository.GetByPostIdAsync(postId);
       if (post is null)
       {
         throw new PostNotFoundException(postId);
+      }
+
+      if (post.UserInfo.UserId != userId)
+      {
+        throw new UserNotAllowedToDoThatException(userId);
       }
 
       await this._postsRepository.DeleteAsync(post);

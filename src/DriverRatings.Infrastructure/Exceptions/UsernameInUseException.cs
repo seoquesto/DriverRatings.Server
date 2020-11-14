@@ -1,6 +1,6 @@
 namespace src.DriverRatings.Infrastructure.Exceptions
 {
-     public class UsernameInUseException : AppException
+  public class UsernameInUseException : AppException
   {
     public override string Code { get; } = "username_in_use";
 
