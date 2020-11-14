@@ -36,6 +36,17 @@ namespace src.DriverRatings.Infrastructure.Services
       return post.PostId;
     }
 
+    public async Task DeletePostAsync(Guid postId)
+    {
+      var post = await this._postsRepository.GetByPostIdAsync(postId);
+      if (post is null)
+      {
+        throw new PostNotFoundException(postId);
+      }
+
+      await this._postsRepository.DeleteAsync(post);
+    }
+
     public async Task<PostDto> GetByPostIdAsync(Guid postId)
     {
       var post = await this._postsRepository.GetByPostIdAsync(postId);

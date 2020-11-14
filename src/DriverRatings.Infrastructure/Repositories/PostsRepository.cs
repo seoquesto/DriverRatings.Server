@@ -26,7 +26,7 @@ namespace src.DriverRatings.Infrastructure.Repositories
     public async Task<Post> GetByPostIdAsync(Guid postId)
       => await this._posts.Find(x => x.PostId.Equals(postId)).SingleOrDefaultAsync();
 
-    public async Task RemoveAsync(Post post)
+    public async Task DeleteAsync(Post post)
       => await this._posts.DeleteOneAsync(x => x.PostId.Equals(post.PostId));
 
     public async Task UpdateAsync(Post post)

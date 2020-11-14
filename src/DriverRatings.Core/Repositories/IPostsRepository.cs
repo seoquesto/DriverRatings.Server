@@ -10,7 +10,7 @@ namespace src.DriverRatings.Core.Repositories
     Task<Post> GetByPostIdAsync(Guid postId);
     Task<IEnumerable<Post>> GetAllByUserIdAsync(Guid userId);
     Task AddAsync(Post post);
-    Task RemoveAsync(Post post);
+    Task DeleteAsync(Post post);
     Task UpdateAsync(Post post);
   }
 }

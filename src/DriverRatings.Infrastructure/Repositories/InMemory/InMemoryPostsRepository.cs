@@ -29,7 +29,7 @@ namespace src.DriverRatings.Infrastructure.Repositories.InMemory
       return PostsList.FirstOrDefault(x => x.PostId.Equals(postId));
     }
 
-    public async Task RemoveAsync(Post post)
+    public async Task DeleteAsync(Post post)
     {
       var postToRemove = await this.GetByPostIdAsync(post.PostId);
       PostsList.Remove(postToRemove);

@@ -42,5 +42,15 @@ namespace src.DriverRatings.Api.Controllers
       var postId = await this.DispatchCommandAsync<CreatePost, Guid>(command);
       return Created($"posts/{postId}", new object());
     }
+
+    [Authorize]
+    [HttpDelete("{postId}")]
+    public async Task<IActionResult> CreatePostAsync(Guid postId)
+    {
+      _logger.Info($"Call delete post api. User id: {UserId}.");
+      var deletePost = new DeletePost { PostId = postId }; 
+      await this.DispatchCommandAsync(deletePost);
+      return Ok();
+    }
   }
 }

@@ -8,5 +8,6 @@ namespace src.DriverRatings.Infrastructure.Services.Interfaces
   {
     Task<Guid> AddPostAsync(Guid userId, string content);
     Task<PostDto> GetByPostIdAsync(Guid postId);
+    Task DeletePostAsync(Guid postId);
   }
 }

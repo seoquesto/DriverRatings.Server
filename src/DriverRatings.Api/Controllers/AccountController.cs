@@ -42,11 +42,11 @@ namespace src.DriverRatings.Api.Controllers
       await this.DispatchCommandAsync(command);
       var jwt = this._memoryCache.GetJwt(command.CacheId);
 
-      return new JsonResult(jwt);
+      return Ok(jwt);
     }
 
     [Authorize]
-    [HttpGet("check-auth")]
+    [HttpGet("me")]
     public IActionResult GetAuth()
       => Content($"You are authorized!. Hello {this.User.Identity.Name}!");
   }

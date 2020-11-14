@@ -34,7 +34,7 @@ namespace src.DriverRatings.Api.Controllers
       await this.DispatchCommandAsync(command);
       var jwt = this._memoryCache.GetJwt(command.CacheId);
 
-      return new JsonResult(jwt);
+      return Ok(jwt);
     }
 
     [Authorize]

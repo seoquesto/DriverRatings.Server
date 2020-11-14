@@ -41,7 +41,7 @@ content-type: application/json
 ### CHECK AUTH
 ### 
 # @name checkAuth
-GET {{url}}/account/check-auth
+GET {{url}}/account/me
 Authorization: Bearer {{login.response.body.token}}
 
 ###
@@ -86,3 +86,11 @@ content-type: application/json
 # @name getPostById
 GET {{url}}/{{createPost.response.headers.Location}}
 Authorization: Bearer {{login.response.body.token}}
+
+###
+### DELETE POST
+###
+# @name deletePost
+DELETE  {{url}}/{{createPost.response.headers.Location}}
+Authorization: Bearer {{login.response.body.token}}
+
