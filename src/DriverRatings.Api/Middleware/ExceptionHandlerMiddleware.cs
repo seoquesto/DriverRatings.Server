@@ -43,8 +43,8 @@ namespace src.DriverRatings.Api.Middleware
 
     private static Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
-      Logger.Error(exception.Message);
       var exCode = ((dynamic)exception)?.Code ?? "error";
+      Logger.Error($"Error code: {exCode} | Message: {exception.Message} | StackTrace: {exception.StackTrace}.");
       var response = new { code = exCode, exception = exception.Message };
       var statusCode = HttpStatusCode.BadRequest;
       var exceptionType = exception.GetType();

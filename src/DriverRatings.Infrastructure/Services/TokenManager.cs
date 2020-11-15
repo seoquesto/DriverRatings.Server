@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using NLog;
 using src.DriverRatings.Core.Exceptions;
 using src.DriverRatings.Core.Models;
 using src.DriverRatings.Core.Repositories;
@@ -11,6 +12,7 @@ namespace src.DriverRatings.Infrastructure.Services
 {
   public class TokenManager : ITokenManager
   {
+    private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
     private readonly IRefreshTokensRepository _refreshTokensRepository;
     private readonly IJwtHandler _jwtHandler;
     private readonly IPasswordHasher<UserDto> _passwordHasher;
@@ -31,6 +33,7 @@ namespace src.DriverRatings.Infrastructure.Services
                 .Replace("/", string.Empty);
 
       await this._refreshTokensRepository.AddAsync(new RefreshToken(userDto.UserId, token));
+      _logger.Info($"Refresh token for user with id {userDto.UserId} has been created and added successfully.");
       return token;
     }
 
@@ -49,6 +52,7 @@ namespace src.DriverRatings.Infrastructure.Services
       var jwt = this._jwtHandler.CreateToken(refToken.UserId, "user");
       jwt.RefreshToken = refToken.Token;
 
+      _logger.Info($"Refresh token for user with id {refToken.UserId} has been refreshed successfully.");
       return jwt;
     }
 
@@ -67,6 +71,7 @@ namespace src.DriverRatings.Infrastructure.Services
 
       token.Revoke();
       await this._refreshTokensRepository.UpdateAsync(token);
+      _logger.Info($"Refresh token for user with id {token.UserId} has been revoked successfully.");
     }
   }
 }

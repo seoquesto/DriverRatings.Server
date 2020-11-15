@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using NLog;
 using src.DriverRatings.Core.Exceptions;
 using src.DriverRatings.Core.Models;
 using src.DriverRatings.Core.Repositories;
@@ -15,6 +16,7 @@ namespace src.DriverRatings.Infrastructure.Services
 {
   public class PostsService : IPostsService
   {
+    private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
     private readonly IPostsRepository _postsRepository;
     private readonly IUsersRepository _usersRepository;
     private readonly IMapper _mapper;
@@ -31,12 +33,14 @@ namespace src.DriverRatings.Infrastructure.Services
       var user = await this._usersRepository.GetAsync(x => x.UserId == userId);
       if (user is null)
       {
+        _logger.Error($@"User with id: ""{userId}"" was not found.");
         throw new UserNotFoundException($@"User with id: ""{userId}"" was not found.");
       }
 
       var post = new Post(new UserInfo(user.UserId, user.Username), content);
       await this._postsRepository.AddAsync(post);
 
+      _logger.Info($"Post with id: {post.PostId} has been added successfully.");
       return post.PostId;
     }
 
@@ -45,12 +49,14 @@ namespace src.DriverRatings.Infrastructure.Services
       var post = await this._postsRepository.GetAsync(x => x.PostId == postId);
       if (post is null)
       {
+        _logger.Error($"Post not found: {postId.ToString()}.");
         throw new PostNotFoundException(postId);
       }
 
       var user = await this._usersRepository.GetAsync(x => x.UserId == userId);
       if (user is null)
       {
+        _logger.Error($@"User with id: ""{userId}"" was not found.");
         throw new UserNotFoundException($@"User with id: ""{userId}"" was not found.");
       }
 
@@ -58,6 +64,7 @@ namespace src.DriverRatings.Infrastructure.Services
 
       post.AddComment(new Comment(commentId, userInfo, content));
 
+      _logger.Info($"Comment with id: {commentId.ToString()} has been added successfully.");
       await this._postsRepository.UpdateAsync(post, x => x.PostId == postId);
     }
 
@@ -107,15 +114,19 @@ namespace src.DriverRatings.Infrastructure.Services
       var post = await this._postsRepository.GetAsync(x => x.PostId == postId);
       if (post is null)
       {
+
+        _logger.Error($"Post not found: {postId.ToString()}.");
         throw new PostNotFoundException(postId);
       }
 
       if (post.UserInfo.UserId != userId)
       {
+        _logger.Error($"Post with id {postId} cannot be deleted because user with id: {userId} is not the post's author.");
         throw new UserNotAllowedToDoThatException(userId);
       }
 
       await this._postsRepository.DeleteAsync(x => x.PostId == postId);
+      _logger.Info($"Post with id: {postId.ToString()} has been deleted successfully.");
     }
   }
 }

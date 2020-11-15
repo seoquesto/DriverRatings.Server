@@ -29,7 +29,7 @@ namespace src.DriverRatings.Api.Controllers
     [HttpPost("register")]
     public async Task<IActionResult> RegisterAsync([FromBody] CreateUser command)
     {
-      Logger.Info($"Call register user api. Email {command.Email}");
+      Logger.Info($"Call register user api (email: {command.Email}, username: {command.Username}, role: {command.Role}).");
       var userDto = await this.DispatchCommandAsync<CreateUser, UserDto>(command);
       return Created($"users/{userDto.Email}", new object());
     }

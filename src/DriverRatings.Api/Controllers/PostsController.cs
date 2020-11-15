@@ -33,7 +33,7 @@ namespace src.DriverRatings.Api.Controllers
     [HttpPost]
     public async Task<IActionResult> CreatePostAsync([FromBody] CreatePost command)
     {
-      _logger.Info($"Call create post api. User id: {UserId}.");
+      _logger.Info($"Call create post api (user id: {this.UserId}).");
       var postId = await this.DispatchCommandAsync<CreatePost, Guid>(command);
       return Created($"posts/{postId}", new object());
     }
@@ -42,7 +42,7 @@ namespace src.DriverRatings.Api.Controllers
     [HttpPost("comment")]
     public async Task<IActionResult> CreatePostCommentAsync([FromBody] CreateComment command)
     {
-      _logger.Info($"Call create comment api. User id: {UserId}. Post id: {command.PostId}.");
+      _logger.Info($"Call create comment api (user id: {UserId}).");
       var commentId = await this.DispatchCommandAsync<CreateComment, Guid>(command);
       return Created($"posts/{command.PostId}/{commentId}", new object());
     }
@@ -63,23 +63,22 @@ namespace src.DriverRatings.Api.Controllers
       return Ok(comment);
     }
 
+    [HttpGet("{username}/all")]
+    public async Task<IActionResult> CreatePostAsync(string username)
+    {
+      var query = new GetPostsAssignedToUser { Username = username };
+      var posts = await this.DispatchQueryAsync<GetPostsAssignedToUser, IEnumerable<PostDto>>(query);
+      return Ok(posts);
+    }
+
     [Authorize]
     [HttpDelete("{postId}")]
     public async Task<IActionResult> CreatePostAsync(Guid postId)
     {
-      _logger.Info($"Call delete post api. User id: {UserId}.");
+      _logger.Info($"Call delete post api (user id: {UserId}, post id: {postId}).");
       var deletePost = new DeletePost { PostId = postId };
       await this.DispatchCommandAsync(deletePost);
       return Ok();
-    }
-
-    [HttpGet("{username}/all")]
-    public async Task<IActionResult> CreatePostAsync(string username)
-    {
-      _logger.Info($"Call get all posts assigned to user with name: {username}.");
-      var query = new GetPostsAssignedToUser { Username = username };
-      var posts = await this.DispatchQueryAsync<GetPostsAssignedToUser, IEnumerable<PostDto>>(query);
-      return Ok(posts);
     }
   }
 }
