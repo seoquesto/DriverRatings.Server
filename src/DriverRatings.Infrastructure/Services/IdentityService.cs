@@ -73,6 +73,7 @@ namespace src.DriverRatings.Infrastructure.Services
       var user = await this._usersRepository.GetAsync(x => x.Username == modifiedUsername);
       if (user is null)
       {
+        _logger.Error($"Invalid username: {modifiedUsername}.");
         throw new InvalidCredentialsException();
       }
 
@@ -82,6 +83,8 @@ namespace src.DriverRatings.Infrastructure.Services
         _logger.Error($"Invalid password for user id: {user.UserId.ToString()}.");
         throw new InvalidCredentialsException();
       }
+
+      _logger.Info($"User with name: {modifiedUsername} has been logged successfully in.");
     }
   }
 }
