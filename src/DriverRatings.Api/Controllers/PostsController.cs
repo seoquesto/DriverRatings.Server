@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +29,24 @@ namespace src.DriverRatings.Api.Controllers
       : base(commandDispatcher, queryDispatcher)
       => this.postsService = postsService;
 
+    [Authorize]
+    [HttpPost]
+    public async Task<IActionResult> CreatePostAsync([FromBody] CreatePost command)
+    {
+      _logger.Info($"Call create post api. User id: {UserId}.");
+      var postId = await this.DispatchCommandAsync<CreatePost, Guid>(command);
+      return Created($"posts/{postId}", new object());
+    }
+
+    [Authorize]
+    [HttpPost("comment")]
+    public async Task<IActionResult> CreatePostCommentAsync([FromBody] CreateComment command)
+    {
+      _logger.Info($"Call create comment api. User id: {UserId}. Post id: {command.PostId}.");
+      var commentId = await this.DispatchCommandAsync<CreateComment, Guid>(command);
+      return Created($"posts/{command.PostId}/{commentId}", new object());
+    }
+
     [HttpGet("{postId}")]
     public async Task<IActionResult> GetPostByIdAsync(Guid postId)
     {
@@ -36,13 +55,12 @@ namespace src.DriverRatings.Api.Controllers
       return Ok(postDto);
     }
 
-    [Authorize]
-    [HttpPost]
-    public async Task<IActionResult> CreatePostAsync([FromBody] CreatePost command)
+    [HttpGet("{postId}/{commentId}")]
+    public async Task<IActionResult> CreatePostAsync(Guid postId, Guid commentId)
     {
-      _logger.Info($"Call create post api. User id: {UserId}.");
-      var postId = await this.DispatchCommandAsync<CreatePost, Guid>(command);
-      return Created($"posts/{postId}", new object());
+      var command = new GetCommentById { PostId = postId, CommentId = commentId };
+      var comment = await this.DispatchQueryAsync<GetCommentById, CommentDto>(command);
+      return Ok(comment);
     }
 
     [Authorize]
@@ -55,21 +73,13 @@ namespace src.DriverRatings.Api.Controllers
       return Ok();
     }
 
-    [Authorize]
-    [HttpPost("comment")]
-    public async Task<IActionResult> CreatePostCommentAsync([FromBody] CreateComment command)
+    [HttpGet("{username}/all")]
+    public async Task<IActionResult> CreatePostAsync(string username)
     {
-      _logger.Info($"Call create comment api. User id: {UserId}. Post id: {command.PostId}.");
-      var commentId = await this.DispatchCommandAsync<CreateComment, Guid>(command);
-      return Created($"posts/{command.PostId}/{commentId}", new object());
-    }
-
-    [HttpGet("{postId}/{commentId}")]
-    public async Task<IActionResult> CreatePostAsync(Guid postId, Guid commentId)
-    {
-      var command = new GetCommentById { PostId = postId, CommentId = commentId };
-      var comment = await this.DispatchQueryAsync<GetCommentById, CommentDto>(command);
-      return Ok(comment);
+      _logger.Info($"Call get all posts assigned to user with name: {username}.");
+      var query = new GetPostsAssignedToUser { Username = username };
+      var posts = await this.DispatchQueryAsync<GetPostsAssignedToUser, IEnumerable<PostDto>>(query);
+      return Ok(posts);
     }
   }
 }

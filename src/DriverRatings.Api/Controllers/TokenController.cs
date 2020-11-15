@@ -29,7 +29,7 @@ namespace src.DriverRatings.Api.Controllers
     [HttpPost("refresh")]
     public async Task<IActionResult> RefreshAccessTokenAsync([FromBody] RefreshAccessToken command)
     {
-      _logger.Info($"Call refresh access token api. User id: {command.UserId}.");
+      _logger.Info($"Call refresh access token api. User id: {this.UserId}.");
       command.CacheId = Guid.NewGuid();
       await this.DispatchCommandAsync(command);
       var jwt = this._memoryCache.GetJwt(command.CacheId);
@@ -41,7 +41,7 @@ namespace src.DriverRatings.Api.Controllers
     [HttpPost("revoke")]
     public async Task<IActionResult> RevokeAccessTokenAsync([FromBody] RevokeRefreshToken command)
     {
-      _logger.Info($"Call revoke access token api. User id: {command.UserId}.");
+      _logger.Info($"Call revoke access token api. User id: {this.UserId}.");
       await this.DispatchCommandAsync(command);
       return NoContent();
     }

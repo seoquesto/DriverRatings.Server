@@ -8,12 +8,12 @@ namespace src.DriverRatings.Infrastructure.Services
 {
   public class DataInitializer : IDataInitializer
   {
-    private readonly IUsersService _usersService;
+    private readonly IIdentityService _identityService;
     private readonly ILogger<DataInitializer> _logger;
 
-    public DataInitializer(IUsersService usersService, ILogger<DataInitializer> logger)
+    public DataInitializer(IIdentityService identityService, ILogger<DataInitializer> logger)
     {
-      this._usersService = usersService;
+      this._identityService = identityService;
       this._logger = logger;
     }
 
@@ -25,13 +25,13 @@ namespace src.DriverRatings.Infrastructure.Services
       for (int i = 0; i < 3; i++)
       {
         var userId = Guid.NewGuid();
-        tasks.Add(this._usersService.RegisterAsync(userId, $"user{i}", $"user{i}@email.com", "password", "user"));
+        tasks.Add(this._identityService.RegisterAsync(userId, $"user{i}", $"user{i}@email.com", "password", "user"));
       }
 
       for (int i = 0; i < 3; i++)
       {
         var adminId = Guid.NewGuid();
-        tasks.Add(this._usersService.RegisterAsync(adminId, $"admin{i}", $"admin{i}@email.com", "password", "admin"));
+        tasks.Add(this._identityService.RegisterAsync(adminId, $"admin{i}", $"admin{i}@email.com", "password", "admin"));
       }
 
       await Task.WhenAll(tasks);

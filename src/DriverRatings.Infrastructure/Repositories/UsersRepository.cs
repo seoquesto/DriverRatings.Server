@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
@@ -10,6 +11,7 @@ namespace src.DriverRatings.Infrastructure.Repositories
 {
   public class UsersRepository : IUsersRepository, IMongoRepository
   {
+    private const string CollectionName = "users";
     private readonly IMongoCollection<User> _users;
 
     public UsersRepository(IMongoDatabase mongoDatabase)
@@ -17,25 +19,19 @@ namespace src.DriverRatings.Infrastructure.Repositories
       this._users = mongoDatabase.GetCollection<User>("users");
     }
 
-    public async Task<IEnumerable<User>> GetAllAsync()
-      => await this._users.AsQueryable().ToListAsync();
-
-    public async Task<User> GetByEmailAsync(string email)
-      => await this._users.AsQueryable().FirstOrDefaultAsync(x => x.Email.Equals(email));
-
-    public async Task<User> GetByIdAsync(Guid userId)
-      => await this._users.AsQueryable().FirstOrDefaultAsync(x => x.UserId.Equals(userId));
-
-    public async Task<User> GetByUsernameAsync(string username)
-      => await this._users.AsQueryable().FirstOrDefaultAsync(x => x.Username.Equals(username));
-
     public async Task AddAsync(User user)
       => await this._users.InsertOneAsync(user);
 
-    public async Task RemoveAsync(User user)
-      => await this._users.DeleteOneAsync(x => x.UserId.Equals(user.UserId));
+    public async Task<User> GetAsync(Expression<Func<User, bool>> predicate)
+      => await this._users.Find(predicate).SingleOrDefaultAsync();
 
-    public async Task UpdateAsync(User user)
-      => await this._users.ReplaceOneAsync(x => x.UserId.Equals(user.UserId), user);
+    public async Task<IReadOnlyCollection<User>> FindAsync(Expression<Func<User, bool>> predicate)
+      => await this._users.Find(predicate).ToListAsync();
+
+    public async Task DeleteAsync(Expression<Func<User, bool>> predicate)
+      => await this._users.DeleteOneAsync(predicate);
+
+    public async Task UpdateAsync(User user, Expression<Func<User, bool>> predicate)
+      => await this._users.ReplaceOneAsync(predicate, user);
   }
 }

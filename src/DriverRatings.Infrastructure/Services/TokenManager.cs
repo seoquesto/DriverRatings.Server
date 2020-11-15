@@ -22,6 +22,18 @@ namespace src.DriverRatings.Infrastructure.Services
       this._passwordHasher = passwordHasher;
     }
 
+    public async Task<string> CreateRefreshTokenAsync(UserDto userDto)
+    {
+      var token = this._passwordHasher
+                .HashPassword(userDto, Guid.NewGuid().ToString())
+                .Replace("+", string.Empty)
+                .Replace("=", string.Empty)
+                .Replace("/", string.Empty);
+
+      await this._refreshTokensRepository.AddAsync(new RefreshToken(userDto.UserId, token));
+      return token;
+    }
+
     public async Task<JwtDto> RefreshAccessToken(string refreshToken)
     {
       var refToken = await this._refreshTokensRepository.GetAsync(refreshToken);
@@ -55,18 +67,6 @@ namespace src.DriverRatings.Infrastructure.Services
 
       token.Revoke();
       await this._refreshTokensRepository.UpdateAsync(token);
-    }
-
-    public async Task<string> CreateRefreshTokenAsync(UserDto userDto)
-    {
-      var token = this._passwordHasher
-                .HashPassword(userDto, Guid.NewGuid().ToString())
-                .Replace("+", string.Empty)
-                .Replace("=", string.Empty)
-                .Replace("/", string.Empty);
-
-      await this._refreshTokensRepository.AddAsync(new RefreshToken(userDto.UserId, token));
-      return token;
     }
   }
 }

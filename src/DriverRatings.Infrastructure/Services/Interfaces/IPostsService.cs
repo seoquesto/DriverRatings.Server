@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using src.DriverRatings.Infrastructure.DTO;
 
@@ -11,5 +12,6 @@ namespace src.DriverRatings.Infrastructure.Services.Interfaces
     Task DeletePostAsync(Guid userId, Guid postId);
     Task AddCommentAsync(Guid userId, Guid postId, Guid commentId, string content);
     Task<CommentDto> GetCommentAsync(Guid postId, Guid commentId);
+    Task<IEnumerable<PostDto>> GetPostsAssignedToUser(string username);
   }
 }

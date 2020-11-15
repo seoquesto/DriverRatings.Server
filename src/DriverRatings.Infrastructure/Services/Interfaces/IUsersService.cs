@@ -6,8 +6,6 @@ namespace src.DriverRatings.Infrastructure.Services.Interfaces
 {
   public interface IUsersService : IService
   {
-    Task RegisterAsync(Guid userId, string username, string email, string password, string role);
-    Task LoginAsync(string username, string password);
     Task<UserDto> GetByIdAsync(Guid userId);
     Task<UserDto> GetByEmailAsync(string email);
     Task<UserDto> GetByUsernameAsync(string username);

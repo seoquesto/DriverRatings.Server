@@ -23,29 +23,14 @@ namespace src.DriverRatings.Core.Models
 
     public User(Guid userId, string username, string email, string password, string salt, string role = "user")
     {
-      this.SetUserId(userId);
+      this.UserId = userId;
       this.SetUsername(username);
       this.SetEmail(email);
       this.SetPassword(password);
       this.SetSalt(salt);
       this.SetRole(role);
     }
-
-    private void SetUserId(Guid userId)
-    {
-      if (userId == Guid.Empty)
-      {
-        throw new InvalidIdException("Invalid user id.");
-      }
-
-      if (this.UserId == userId)
-      {
-        return;
-      }
-
-      this.UserId = userId;
-    }
-
+    
     private void SetUsername(string username)
     {
       if (string.IsNullOrEmpty(username))

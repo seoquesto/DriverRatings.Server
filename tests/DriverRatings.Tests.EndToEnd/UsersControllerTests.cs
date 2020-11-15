@@ -1,13 +1,13 @@
 using System.Threading.Tasks;
 using DriverRatings.Api;
 using Microsoft.AspNetCore.Mvc.Testing;
-using src.DriverRatings.Infrastructure.Commands.Users;
 using Xunit;
 using Newtonsoft.Json;
 using System.Text;
 using System.Net.Http;
 using System.Net;
 using src.DriverRatings.Infrastructure.DTO;
+using src.DriverRatings.Infrastructure.Commands.Identity;
 
 namespace src.DriverRatings.Tests.EndToEnd
 {

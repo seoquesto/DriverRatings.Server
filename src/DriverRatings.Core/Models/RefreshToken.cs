@@ -17,24 +17,9 @@ namespace src.DriverRatings.Core.Models
 
     public RefreshToken(Guid userId, string token, bool revoked = false)
     {
-      this.SetUserId(userId);
+      this.UserId = userId;
       this.SetToken(token);
       this.CreatedAt = DateTime.UtcNow;
-    }
-
-    private void SetUserId(Guid userId)
-    {
-      if (userId == null)
-      {
-        throw new InvalidIdException("Invalid user id.");
-      }
-
-      if (this.UserId == userId)
-      {
-        return;
-      }
-
-      this.UserId = userId;
     }
 
     public void SetToken(string token)
