@@ -1,4 +1,4 @@
-namespace src.DriverRatings.Infrastructure.Commands.Users
+namespace src.DriverRatings.Infrastructure.Commands.Identity
 {
   public class CreateUser : ICommand
   {

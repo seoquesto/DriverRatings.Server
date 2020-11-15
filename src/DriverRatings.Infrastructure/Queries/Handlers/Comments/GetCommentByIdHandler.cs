@@ -3,7 +3,7 @@ using src.DriverRatings.Infrastructure.DTO;
 using src.DriverRatings.Infrastructure.Queries.Comments;
 using src.DriverRatings.Infrastructure.Services.Interfaces;
 
-namespace src.DriverRatings.Infrastructure.Queries.Handlers.Commands
+namespace src.DriverRatings.Infrastructure.Queries.Handlers.Comments
 {
   public class GetCommentByIdHandler : IQueryHandler<GetCommentById, CommentDto>
   {

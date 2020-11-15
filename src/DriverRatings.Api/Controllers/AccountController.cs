@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using NLog;
 using src.DriverRatings.Infrastructure.Commands;
-using src.DriverRatings.Infrastructure.Commands.Users;
+using src.DriverRatings.Infrastructure.Commands.Identity;
 using src.DriverRatings.Infrastructure.DTO;
 using src.DriverRatings.Infrastructure.Extensions;
 using src.DriverRatings.Infrastructure.Queries;
@@ -20,8 +20,8 @@ namespace src.DriverRatings.Api.Controllers
     private readonly IMemoryCache _memoryCache;
 
     public AccountController(
-      IMemoryCache memoryCache, 
-      ICommandDispatcher commandDispatcher, 
+      IMemoryCache memoryCache,
+      ICommandDispatcher commandDispatcher,
       IQueryDispatcher queryDispatcher)
       : base(commandDispatcher, queryDispatcher)
       => this._memoryCache = memoryCache;

@@ -30,7 +30,7 @@ namespace src.DriverRatings.Core.Models
 
     public Post(Guid postId, UserInfo userInfo, string content)
     {
-      this.SetPostId(postId);
+      this.PostId = postId;
       this.SetUserInfo(userInfo);
       this.SetContent(content);
       CreatedAt = DateTime.UtcNow;

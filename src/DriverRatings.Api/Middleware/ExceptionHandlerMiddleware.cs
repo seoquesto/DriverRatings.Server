@@ -3,7 +3,9 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using NLog;
 
 namespace src.DriverRatings.Api.Middleware
 {
@@ -18,6 +20,7 @@ namespace src.DriverRatings.Api.Middleware
 
   internal class ExceptionHandlerMiddleware
   {
+    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     private readonly RequestDelegate _next;
 
     public ExceptionHandlerMiddleware(RequestDelegate next)
@@ -40,6 +43,7 @@ namespace src.DriverRatings.Api.Middleware
 
     private static Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
+      Logger.Error(exception.Message);
       var exCode = ((dynamic)exception)?.Code ?? "error";
       var response = new { code = exCode, exception = exception.Message };
       var statusCode = HttpStatusCode.BadRequest;

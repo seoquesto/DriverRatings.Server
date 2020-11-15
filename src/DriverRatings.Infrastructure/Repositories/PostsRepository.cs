@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
@@ -10,26 +11,27 @@ namespace src.DriverRatings.Infrastructure.Repositories
 {
   public class PostsRepository : IPostsRepository, IMongoRepository
   {
+    private const string CollectionName = "posts";
     private readonly IMongoCollection<Post> _posts;
 
     public PostsRepository(IMongoDatabase mongoDatabase)
     {
-      this._posts = mongoDatabase.GetCollection<Post>("posts");
+      this._posts = mongoDatabase.GetCollection<Post>(CollectionName);
     }
 
     public async Task AddAsync(Post post)
       => await this._posts.InsertOneAsync(post);
 
-    public async Task<IEnumerable<Post>> GetAllByUserIdAsync(Guid userId)
-      => await this._posts.Find(x => x.UserInfo.UserId.Equals(userId)).ToListAsync();
+    public async Task<Post> GetAsync(Expression<Func<Post, bool>> predicate)
+      => await this._posts.Find(predicate).SingleOrDefaultAsync();
 
-    public async Task<Post> GetByPostIdAsync(Guid postId)
-      => await this._posts.Find(x => x.PostId.Equals(postId)).SingleOrDefaultAsync();
+    public async Task<IReadOnlyCollection<Post>> FindAsync(Expression<Func<Post, bool>> predicate)
+      => await this._posts.Find(predicate).ToListAsync();
 
-    public async Task DeleteAsync(Post post)
-      => await this._posts.DeleteOneAsync(x => x.PostId.Equals(post.PostId));
+    public async Task UpdateAsync(Post post, Expression<Func<Post, bool>> predicate)
+      => await this._posts.ReplaceOneAsync(predicate, post);
 
-    public async Task UpdateAsync(Post post)
-      => await this._posts.ReplaceOneAsync(x => x.PostId.Equals(post.PostId), post);
+    public async Task DeleteAsync(Expression<Func<Post, bool>> predicate)
+      => await this._posts.DeleteOneAsync(predicate);
   }
 }

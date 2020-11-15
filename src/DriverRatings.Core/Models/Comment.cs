@@ -21,25 +21,10 @@ namespace src.DriverRatings.Core.Models
 
     public Comment(Guid commentId, UserInfo userInfo, string content)
     {
-      this.SetCommentId(commentId);
+      this.CommentId = commentId;
       this.SetUserInfo(userInfo);
       this.SetContent(content);
       this.CreatedAd = DateTime.UtcNow;
-    }
-
-    private void SetCommentId(Guid commentId)
-    {
-      if (commentId == Guid.Empty)
-      {
-        throw new InvalidIdException("Invalid comment id.");
-      }
-
-      if (this.CommentId == commentId)
-      {
-        return;
-      }
-
-      this.CommentId = commentId;
     }
 
     private void SetUserInfo(UserInfo userInfo)

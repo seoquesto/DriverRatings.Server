@@ -77,6 +77,12 @@ GET {{url}}/{{createComment.response.headers.Location}}
 Authorization: Bearer {{login.response.body.token}}
 
 ###
+### GET ALL POSTS ASSIGNED TO USER
+###
+# @name getAllPostsAssignedToUser
+GET {{url}}/posts/{{username}}/all
+
+###
 ### DELETE POST
 ###
 # @name deletePost
