@@ -6,7 +6,7 @@ namespace src.DriverRatings.Infrastructure.Commands.Users
   {
     // TokenId for ICacheMemory in order to return cached value.
     public Guid CacheId { get; set; }
-    public string Email { get; set; }
+    public string Username { get; set; }
     public string Password { get; set; }
   }
 }

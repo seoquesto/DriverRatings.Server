@@ -11,6 +11,6 @@ namespace src.DriverRatings.Infrastructure.Commands.Handlers.Posts
       => (_postsService) = (postService);
       
     public async Task HandleAsync(DeletePost command)
-      => await this._postsService.DeletePostAsync(command.PostId);
+      => await this._postsService.DeletePostAsync(command.UserId, command.PostId);
   }
 }

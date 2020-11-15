@@ -23,8 +23,8 @@ namespace src.DriverRatings.Infrastructure.Commands.Handlers.Users
 
     public async Task HandleAsync(Login command)
     {
-      await this._usersService.LoginAsync(command.Email, command.Password);
-      var user = await this._usersService.GetByEmailAsync(command.Email);
+      await this._usersService.LoginAsync(command.Username, command.Password);
+      var user = await this._usersService.GetByUsernameAsync(command.Username);
       var jwt = this._jtwHandler.CreateToken(user.UserId, "user");
       var token = await this._tokenManager.CreateRefreshTokenAsync(user);
       jwt.RefreshToken = token;

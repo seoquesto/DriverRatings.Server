@@ -37,7 +37,7 @@ namespace src.DriverRatings.Api.Controllers
     [HttpPost("login")]
     public async Task<IActionResult> LoginAsync([FromBody] Login command)
     {
-      Logger.Info($"Call login user api. Email {command.Email}");
+      Logger.Info($"Call login user api. User name {command.Username}");
       command.CacheId = Guid.NewGuid();
       await this.DispatchCommandAsync(command);
       var jwt = this._memoryCache.GetJwt(command.CacheId);
