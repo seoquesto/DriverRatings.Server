@@ -1,3 +1,3 @@
 #!/bin/bash
-cd tests/DriverRatings.Tests
+cd tests/DriverRatings.Server.Tests
 dotnet test
