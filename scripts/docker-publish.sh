@@ -13,6 +13,6 @@ case "$TRAVIS_BRANCH" in
 esac
 
 docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-docker build -f ./src/DriverRatings.Api/Dockerfile.$DOCKER_ENV -t driver-ratings:$DOCKER_TAG ./src/DriverRatings.Api
-docker tag driver-ratings:$DOCKER_TAG $DOCKER_USERNAME/driver-ratings:$DOCKER_TAG
-docker push $DOCKER_USERNAME/driver-ratings:$DOCKER_TAG
+docker build -f ./src/DriverRatings.Server.Api/Dockerfile.$DOCKER_ENV -t driver-ratings-api:$DOCKER_TAG ./src/DriverRatings.Server.Api
+docker tag driver-ratings-api:$DOCKER_TAG $DOCKER_USERNAME/driver-ratings-api:$DOCKER_TAG
+docker push $DOCKER_USERNAME/driver-ratings-api:$DOCKER_TAG
