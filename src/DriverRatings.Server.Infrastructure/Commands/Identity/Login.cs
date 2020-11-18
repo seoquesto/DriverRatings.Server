@@ -2,6 +2,7 @@ using System;
 
 namespace src.DriverRatings.Server.Infrastructure.Commands.Identity
 {
+  // Contract between api and client.
   public class Login : ICommand
   {
     // TokenId for ICacheMemory in order to return cached value.

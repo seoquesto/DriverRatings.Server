@@ -35,6 +35,7 @@ namespace DriverRatings.Server.Api
       services.AddControllers();
       services.AddOptions();
       services.AddMemoryCache();
+      services.AddCors();
       services.AddLogging(loggingBuilder =>
       {
         loggingBuilder.ClearProviders();
@@ -80,8 +81,13 @@ namespace DriverRatings.Server.Api
       }
 
       MongoConfigurator.Initialize();
-      // app.UseHttpsRedirection();
       app.UseRouting();
+      app.UseCors(builder => builder
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .SetIsOriginAllowed((host) => true)
+                .AllowCredentials()
+            );
       app.UseAuthentication();
       app.UseAuthorization();
       app.UseExceptionMiddleware();
