@@ -37,7 +37,8 @@ namespace src.DriverRatings.Server.Infrastructure.Services
         throw new UserNotFoundException($@"User with id: ""{userId}"" was not found.");
       }
 
-      var post = new Post(new UserInfo(user.UserId, user.Username), content);
+      var creatorInfo = new CreatorInfo(user.UserId, user.Username);
+      var post = new Post(creatorInfo, content);
       await this._postsRepository.AddAsync(post);
 
       _logger.Info($"Post with id: {post.PostId} has been added successfully.");
