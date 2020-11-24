@@ -28,7 +28,7 @@ namespace src.DriverRatings.Server.Infrastructure.Services
       this._mapper = mapper;
     }
 
-    public async Task<Guid> AddPostAsync(Guid userId, string content)
+    public async Task<Guid> AddPostAsync(Guid userId, string content, string plateIdentifier, string plateNumber)
     {
       var user = await this._usersRepository.GetAsync(x => x.UserId == userId);
       if (user is null)
@@ -36,9 +36,9 @@ namespace src.DriverRatings.Server.Infrastructure.Services
         _logger.Error($@"User with id: ""{userId}"" was not found.");
         throw new UserNotFoundException($@"User with id: ""{userId}"" was not found.");
       }
-
+      var plate = new Plate(plateIdentifier, plateNumber);
       var creatorInfo = new CreatorInfo(user.UserId, user.Username);
-      var post = new Post(creatorInfo, content);
+      var post = new Post(creatorInfo, plate, content);
       await this._postsRepository.AddAsync(post);
 
       _logger.Info($"Post with id: {post.PostId} has been added successfully.");
@@ -61,9 +61,9 @@ namespace src.DriverRatings.Server.Infrastructure.Services
         throw new UserNotFoundException($@"User with id: ""{userId}"" was not found.");
       }
 
-      var userInfo = new UserInfo(user.UserId, user.Username);
+      var creatorInfo = new CreatorInfo(user.UserId, user.Username);
 
-      post.AddComment(new Comment(commentId, userInfo, content));
+      post.AddComment(new PostComment(commentId, creatorInfo, content));
 
       _logger.Info($"Comment with id: {commentId.ToString()} has been added successfully.");
       await this._postsRepository.UpdateAsync(post, x => x.PostId == postId);
@@ -89,11 +89,11 @@ namespace src.DriverRatings.Server.Infrastructure.Services
         throw new UserNotFoundException($@"User with name: ""{modifiedUsername}"" was not found.");
       }
 
-      var posts = await this._postsRepository.FindAsync(x => x.UserInfo.UserId == user.UserId);
+      var posts = await this._postsRepository.FindAsync(x => x.CreatorInfo.UserId == user.UserId);
       return this._mapper.Map<IEnumerable<PostDto>>(posts);
     }
 
-    public async Task<CommentDto> GetCommentAsync(Guid postId, Guid commentId)
+    public async Task<PostCommentDto> GetCommentAsync(Guid postId, Guid commentId)
     {
       if (postId == Guid.Empty)
       {
@@ -107,7 +107,21 @@ namespace src.DriverRatings.Server.Infrastructure.Services
       var post = await this._postsRepository.GetAsync(x => x.PostId == postId);
       var comment = post.Comments.FirstOrDefault(x => x.CommentId == commentId);
 
-      return this._mapper.Map<CommentDto>(comment);
+      return this._mapper.Map<PostCommentDto>(comment);
+    }
+
+    public async Task<IEnumerable<PostDto>> GetAllPostsAsync()
+    {
+      var posts = await this._postsRepository.FindAsync(x => true);
+      return this._mapper.Map<IEnumerable<PostDto>>(posts);
+    }
+
+    public async Task<IEnumerable<PostDto>> GetAllPostsAsync(string plateIdentifier, string plateNumber)
+    {
+      var fixedIdentifier = plateIdentifier?.Trim().ToUpperInvariant();
+      var fixedNumber = plateNumber?.Trim().ToUpperInvariant();
+      var posts = await this._postsRepository.FindAsync(x => x.Plate.Identifier == fixedIdentifier && x.Plate.Number == fixedNumber);
+      return this._mapper.Map<IEnumerable<PostDto>>(posts);
     }
 
     public async Task DeletePostAsync(Guid userId, Guid postId)
@@ -120,7 +134,7 @@ namespace src.DriverRatings.Server.Infrastructure.Services
         throw new PostNotFoundException(postId);
       }
 
-      if (post.UserInfo.UserId != userId)
+      if (post.CreatorInfo.UserId != userId)
       {
         _logger.Error($"Post with id {postId} cannot be deleted because user with id: {userId} is not the post's author.");
         throw new UserNotAllowedToDoThatException(userId);

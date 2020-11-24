@@ -10,6 +10,6 @@ namespace src.DriverRatings.Server.Infrastructure.DTO
     public PlateDto Plate { get; set; }
     public string Content { get; set; }
     public DateTime CreatedAt { get; set; }
-    public IEnumerable<CommentDto> Comments { get; set; }
+    public IEnumerable<PostCommentDto> Comments { get; set; }
   }
 }

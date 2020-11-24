@@ -15,7 +15,7 @@ namespace src.DriverRatings.Server.Core.Models
       string fixedNumber = number?.Trim().ToUpperInvariant();
       if (string.IsNullOrEmpty(fixedNumber))
       {
-        throw new InvalidAggregationException("Plate number cannot be empty.");
+        throw new InvalidPlateNumberException(fixedNumber);
       }
 
       if (this.Number == fixedNumber)

@@ -1,4 +1,3 @@
-using System;
 using src.DriverRatings.Server.Core.Exceptions;
 
 namespace src.DriverRatings.Server.Core.Models
@@ -16,7 +15,7 @@ namespace src.DriverRatings.Server.Core.Models
       string fixedIdentifier = identifier?.Trim().ToUpperInvariant();
       if (string.IsNullOrEmpty(fixedIdentifier))
       {
-        throw new InvalidAggregationException("Plate identifier cannot be empty.");
+        throw new InvalidPlateIdentifierException(fixedIdentifier);
       }
 
       if (this.Identifier == fixedIdentifier)

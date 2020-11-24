@@ -56,24 +56,32 @@ namespace src.DriverRatings.Server.Api.Controllers
     }
 
     [HttpGet("{postId}/{commentId}")]
-    public async Task<IActionResult> CreatePostAsync(Guid postId, Guid commentId)
+    public async Task<IActionResult> GetPostCommentAsync(Guid postId, Guid commentId)
     {
       var command = new GetCommentById { PostId = postId, CommentId = commentId };
-      var comment = await this.DispatchQueryAsync<GetCommentById, CommentDto>(command);
+      var comment = await this.DispatchQueryAsync<GetCommentById, PostCommentDto>(command);
       return Ok(comment);
     }
 
-    [HttpGet("{username}/all")]
-    public async Task<IActionResult> CreatePostAsync(string username)
+    [HttpGet("all")]
+    public async Task<IActionResult> GetPostsAsync()
     {
-      var query = new GetPostsAssignedToUser { Username = username };
-      var posts = await this.DispatchQueryAsync<GetPostsAssignedToUser, IEnumerable<PostDto>>(query);
+      var query = new GetAllPosts();
+      var posts = await this.DispatchQueryAsync<GetAllPosts, IEnumerable<PostDto>>(query);
+      return Ok(posts);
+    }
+
+    [HttpGet("{plateIdentifier}/{plateNumber}/all")]
+    public async Task<IActionResult> GetPostsAsync(string plateIdentifier, string plateNumber)
+    {
+      var query = new GetPosts { PlateIdentifier = plateIdentifier, PlateNumber = plateNumber };
+      var posts = await this.DispatchQueryAsync<GetPosts, IEnumerable<PostDto>>(query);
       return Ok(posts);
     }
 
     [Authorize]
     [HttpDelete("{postId}")]
-    public async Task<IActionResult> CreatePostAsync(Guid postId)
+    public async Task<IActionResult> DeletePostAsync(Guid postId)
     {
       _logger.Info($"Call delete post api (user id: {UserId}, post id: {postId}).");
       var deletePost = new DeletePost { PostId = postId };
