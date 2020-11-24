@@ -4,15 +4,22 @@ using src.DriverRatings.Server.Infrastructure.DTO;
 
 namespace src.DriverRatings.Server.Infrastructure.AutoMapper
 {
-    public static class AutoMapperConfiguration
+  public static class AutoMapperConfiguration
+  {
+    public static IMapper Configuration()
     {
-        public static IMapper Configuration() {
-          return new MapperConfiguration(config => {
-            config.CreateMap<User, UserDto>();
-            config.CreateMap<Post, PostDto>();
-            config.CreateMap<Comment, CommentDto>();
-            config.CreateMap<UserInfo, UserInfoDto>();
-          }).CreateMapper();
-        }
+      return new MapperConfiguration(config =>
+      {
+        config.CreateMap<User, UserDto>();
+        config.CreateMap<Post, PostDto>();
+        config.CreateMap<Plate, PlateDto>();
+        config.CreateMap<PlateIdentifier, PlateIdentifierDto>();
+        config.CreateMap<PlateDetails, PlateDetailsDto>();
+        config.CreateMap<CommentBase, CommentBaseDto>();
+        config.CreateMap<PostComment, PostCommentDto>();
+        config.CreateMap<PlateComment, PlateCommentDto>();
+        config.CreateMap<CreatorInfo, CreatorInfoDto>();
+      }).CreateMapper();
     }
+  }
 }

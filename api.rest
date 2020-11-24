@@ -38,6 +38,12 @@ content-type: application/json
 }
 
 ###
+### GET ALL POSTS ASSIGNED TO USER
+###
+# @name getAllPostsAssignedToUser
+GET {{url}}/users/{{username}}/posts
+
+###
 ### CREATE POST
 ###
 # @name createPost
@@ -46,7 +52,9 @@ Authorization: Bearer {{login.response.body.token}}
 content-type: application/json
 
 {
-  "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  "plateIdentifier": "PTU",
+  "plateNumber": "NL90"
 }
 
 ###
@@ -77,10 +85,16 @@ GET {{url}}/{{createComment.response.headers.Location}}
 Authorization: Bearer {{login.response.body.token}}
 
 ###
-### GET ALL POSTS ASSIGNED TO USER
+### GET ALL POSTS
 ###
-# @name getAllPostsAssignedToUser
-GET {{url}}/posts/{{username}}/all
+# @name getAllPosts
+GET {{url}}/posts/all
+
+###
+### GET ALL POST ASSIGNED TO PLATE
+###
+# @name getAllPosts
+GET {{url}}/posts/ptu/nl90/all
 
 ###
 ### DELETE POST

@@ -33,32 +33,34 @@ namespace src.DriverRatings.Server.Core.Models
     
     private void SetUsername(string username)
     {
-      if (string.IsNullOrEmpty(username))
+      var fixedUsername = username?.Trim().ToLowerInvariant();
+      if (string.IsNullOrEmpty(fixedUsername))
       {
-        throw new InvalidUsernameException(username);
+        throw new InvalidUsernameException(fixedUsername);
       }
 
-      if (this.Username == username)
+      if (this.Username == fixedUsername)
       {
         return;
       }
 
-      this.Username = username;
+      this.Username = fixedUsername;
     }
 
     private void SetEmail(string email)
     {
-      if (string.IsNullOrEmpty(email))
+      var fixedEmail = email?.Trim().ToLowerInvariant();
+      if (string.IsNullOrEmpty(fixedEmail))
       {
         throw new InvalidCredentialsException("Email cannot be empty.");
       }
 
-      if (this.Email == email)
+      if (this.Email == fixedEmail)
       {
         return;
       }
 
-      this.Email = email;
+      this.Email = fixedEmail;
     }
 
     private void SetPassword(string password)

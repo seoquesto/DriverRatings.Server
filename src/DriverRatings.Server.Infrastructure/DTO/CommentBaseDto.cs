@@ -1,15 +1,12 @@
 using System;
-using System.Collections.Generic;
 
 namespace src.DriverRatings.Server.Infrastructure.DTO
 {
-  public class PostDto
+  public class CommentBaseDto
   {
-    public Guid PostId { get; set; }
+    public Guid CommentId { get; set; }
     public CreatorInfoDto CreatorInfo { get; set; }
-    public PlateDto Plate { get; set; }
     public string Content { get; set; }
     public DateTime CreatedAt { get; set; }
-    public IEnumerable<PostCommentDto> Comments { get; set; }
   }
 }

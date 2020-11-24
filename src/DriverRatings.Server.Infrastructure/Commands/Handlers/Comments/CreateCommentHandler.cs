@@ -14,6 +14,7 @@ namespace src.DriverRatings.Server.Infrastructure.Commands.Handlers.Comments
     public async Task<Guid> HandleAsync(CreateComment command)
     {
       var commentId = Guid.NewGuid();
+      
       await _postsService.AddCommentAsync(command.UserId, command.PostId, commentId, command.Content);
       return commentId;
     }

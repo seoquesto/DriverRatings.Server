@@ -7,31 +7,33 @@ namespace src.DriverRatings.Server.Core.Models
 {
   public class Post
   {
-    private ISet<Comment> _comments = new HashSet<Comment>();
+    private ISet<PostComment> _comments = new HashSet<PostComment>();
 
     public Guid PostId { get; protected set; }
-    public UserInfo UserInfo { get; protected set; }
+    public CreatorInfo CreatorInfo { get; protected set; }
+    public Plate Plate { get; protected set; }
     public string Content { get; protected set; }
     public DateTime CreatedAt { get; protected set; }
-    public IEnumerable<Comment> Comments
+    public IEnumerable<PostComment> Comments
     {
       get => this._comments;
-      private set => this._comments = new HashSet<Comment>(value);
+      private set => this._comments = new HashSet<PostComment>(value);
     }
 
     protected Post()
     {
     }
 
-    public Post(UserInfo userInfo, string content)
-      : this(Guid.NewGuid(), userInfo, content)
+    public Post(CreatorInfo creatorInfo, Plate plate, string content)
+      : this(Guid.NewGuid(), creatorInfo, plate, content)
     {
     }
 
-    public Post(Guid postId, UserInfo userInfo, string content)
+    public Post(Guid postId, CreatorInfo creatorInfo, Plate plate, string content)
     {
       this.PostId = postId;
-      this.SetUserInfo(userInfo);
+      this.SetCreatorInfo(creatorInfo);
+      this.SetPlate(plate);
       this.SetContent(content);
       CreatedAt = DateTime.UtcNow;
     }
@@ -51,37 +53,53 @@ namespace src.DriverRatings.Server.Core.Models
       this.PostId = postId;
     }
 
-    private void SetUserInfo(UserInfo userInfo)
+    private void SetCreatorInfo(CreatorInfo creatorInfo)
     {
-      if (userInfo is null)
+      if (creatorInfo is null)
       {
-        throw new InvalidAggregationException("User's information are required in a post.");
+        throw new InvalidAggregationException("Creator's information are required in a post.");
       }
 
-      if (this.UserInfo == userInfo)
+      if (this.CreatorInfo == creatorInfo)
       {
         return;
       }
 
-      this.UserInfo = userInfo;
+      this.CreatorInfo = creatorInfo;
+    }
+
+    private void SetPlate(Plate plate)
+    {
+      if (plate is null)
+      {
+        throw new InvalidAggregationException("Plate's information are required in a post.");
+      }
+
+      if (this.Plate == plate)
+      {
+        return;
+      }
+
+      this.Plate = plate;
     }
 
     private void SetContent(string content)
     {
-      if (string.IsNullOrEmpty(content))
+      var fixedContent = content?.Trim();
+      if (string.IsNullOrEmpty(fixedContent))
       {
         throw new InvalidCommentContentException("Post cannot be empty.");
       }
 
-      if (this.Content == content)
+      if (this.Content == fixedContent)
       {
         return;
       }
 
-      this.Content = content;
+      this.Content = fixedContent;
     }
 
-    public void AddComment(Comment comment)
+    public void AddComment(PostComment comment)
     {
       if (Comments.Any(x => x.CommentId == comment.CommentId))
       {

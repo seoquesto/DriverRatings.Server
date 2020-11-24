@@ -15,9 +15,6 @@ namespace src.DriverRatings.Server.Infrastructure.Queries.Handlers.Users
       => (_usersService, _mapper) = (usersService, mapper);
 
     public async Task<UserDto> HandleAsync(GetUserByName query)
-    {
-      var user = await this._usersService.GetByUsernameAsync(query.Username);
-      return this._mapper.Map<UserDto>(user);
-    }
+      => await this._usersService.GetByUsernameAsync(query.Username);
   }
 }
