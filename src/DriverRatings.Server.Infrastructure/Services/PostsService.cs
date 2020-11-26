@@ -90,7 +90,7 @@ namespace src.DriverRatings.Server.Infrastructure.Services
       }
 
       var posts = await this._postsRepository.FindAsync(x => x.CreatorInfo.UserId == user.UserId);
-      return this._mapper.Map<IEnumerable<PostDto>>(posts);
+      return this._mapper.Map<IEnumerable<PostDto>>(posts.OrderByDescending(x => x.CreatedAt));
     }
 
     public async Task<PostCommentDto> GetCommentAsync(Guid postId, Guid commentId)
@@ -113,7 +113,7 @@ namespace src.DriverRatings.Server.Infrastructure.Services
     public async Task<IEnumerable<PostDto>> GetAllPostsAsync()
     {
       var posts = await this._postsRepository.FindAsync(x => true);
-      return this._mapper.Map<IEnumerable<PostDto>>(posts);
+      return this._mapper.Map<IEnumerable<PostDto>>(posts.OrderByDescending(x => x.CreatedAt));
     }
 
     public async Task<IEnumerable<PostDto>> GetAllPostsAsync(string plateIdentifier, string plateNumber)
@@ -121,7 +121,7 @@ namespace src.DriverRatings.Server.Infrastructure.Services
       var fixedIdentifier = plateIdentifier?.Trim().ToUpperInvariant();
       var fixedNumber = plateNumber?.Trim().ToUpperInvariant();
       var posts = await this._postsRepository.FindAsync(x => x.Plate.Identifier == fixedIdentifier && x.Plate.Number == fixedNumber);
-      return this._mapper.Map<IEnumerable<PostDto>>(posts);
+      return this._mapper.Map<IEnumerable<PostDto>>(posts.OrderByDescending(x => x.CreatedAt));
     }
 
     public async Task DeletePostAsync(Guid userId, Guid postId)
