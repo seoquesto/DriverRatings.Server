@@ -87,6 +87,7 @@ namespace DriverRatings.Server.Api
                 .AllowAnyMethod()
                 .SetIsOriginAllowed((host) => true)
                 .AllowCredentials()
+                .WithExposedHeaders("Location")
             );
       app.UseAuthentication();
       app.UseAuthorization();
